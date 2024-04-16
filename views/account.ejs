@@ -7,10 +7,18 @@
     <link rel="icon" type="image/png" href="/public/images/favicon.png" sizes="128x128">
     <title>Account</title>
     <link rel="stylesheet" href="/public/css/basics.css">
+    <link rel="stylesheet" href="/public/css/modal.css">
 </head>
 <body>
     <%- include("../views/partials/dashboard-nav") %>
     <main>
+        <div class="modal" id="confirmationModal">
+            <div class="modal-content">
+              <p>Are you sure you want to delete your account? All your associated listings will be deleted.</p>
+              <button id="confirm" onclick="confirmDelete()">Yes, delete</button>
+              <button onclick="closeModal()">Cancel</button>
+            </div>
+          </div>
         <%- include("../views/partials/dashboard-header") %>
         <h1>Account</h1>
         <form class="left-form" action="/api/update-account" method="POST">
@@ -46,15 +54,30 @@
                 <input required type="text" name="cell" id="cell">
             </div>
           </div>
-          <button class="submit-button btn-green" type="submit">Save changes</button>
+          <div class="button-group">
+            <button class="btn-red" type="button">Delete account</button>
+            <button class="submit-button btn-green" type="submit">Save changes</button>
+          </div>
         </form>
         
     </main>
     <script src="/public/js/listings.js"></script>
     <script>
+        var modal = document.getElementById("confirmationModal");
+
+        const userid = "<%= user_id %>";
+        const deleteButton = document.querySelector(".btn-red");
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+    
+        deleteButton.addEventListener("click", function() {
+            modal.style.display = "block";
+        });
+
         document.addEventListener("DOMContentLoaded", function() {
             //populate form
-            const userid = "<%= user_id %>";
             fetch(`/api/userbyid?id=${userid}`)
             .then(response => response.json())
             .then(user => {
@@ -66,9 +89,19 @@
               document.querySelector("#lastName").value = user.lastName;
               document.querySelector("#cell").value = user.cell;
               document.querySelector("form").action = `/api/update-account/${userid}`;
+                  
+              async function confirmDelete() {
+                  closeModal();
+                  await fetch(`/api/delete-user?id=${userid}`);
+                  window.location.href = "/login";
+              };
+
+              document.querySelector("#confirm").addEventListener("click", confirmDelete);
               })
               .catch(error => console.error('Error fetching user:', error)); 
+
             });
+
     </script>
 </body>
 </html>

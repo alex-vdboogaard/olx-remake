@@ -5,11 +5,13 @@ async function getListings(userid) {
         const listingsDiv = document.querySelector('.listings');
         listings.forEach(listing => {
           let div = document.createElement('a');
-          div.href = `/dashboard/listing?id=${listing._id}`; 
+          div.href = `/user/dashboard/listing?id=${listing._id}`; 
           div.className = "listing";
           div.classList.add("a-link")
+          let image = listing.image.replace(/\\/g, '/');
+          image = "/" + image;
           div.innerHTML = `
-              <img src="${listing.image}" alt="${listing.title}">
+              <img src="${image}" alt="${listing.title}">
               <h3>${listing.title}</h3>
               <p class="category">${listing.category}</p>
               <p class="price">R${listing.price}</p>

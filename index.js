@@ -59,19 +59,30 @@ app.use((req, res, next) => {
     next();
 });
 //authorisation
-app.use("/dashboard", (req, res, next) => {
+app.use("/user", (req, res, next) => {
     if (!req.session.user_id) {
         req.flash("danger", "Please login to access your dashboard")
         return res.redirect("/login");
     }
     next();
 })
-app.use("/admin-dashboard", (req, res, next) => {
+
+app.use("/admin", (req, res, next) => {
     if (!req.session.admin_id) {
-        res.redirect("/login");
+        req.flash("danger", "Please login to access your dashboard")
+        return res.redirect("/login");
     }
     next();
 })
+
+app.use("/api", (req, res, next) => {
+    if (!req.session.user_id) {
+        req.flash("danger", "Please login")
+        return res.redirect("/login");
+    }
+    next();
+})
+
 //encryption and hash functions
 const hashPassword = async(userPassword) => {
     const salt = await bcrypt.genSalt(12); //parameter is "difficulty"
@@ -161,21 +172,21 @@ app.post("/contact", validateSchemaMiddleware('userContact'), async(req,res) => 
     res.redirect("/contact");
 })
 //only registered users  
-app.get("/dashboard", (req,res) => {
+app.get("/user/dashboard", (req,res) => {
     res.render("dashboard", { user_id: req.session.user_id })
 })
-app.get("/dashboard/notifications", (req,res) => {
+app.get("/user/dashboard/notifications", (req,res) => {
     res.render("notifications", { user_id: req.session.user_id })
 })
-app.get("/dashboard/account", (req,res) => {
+app.get("/user/dashboard/account", (req,res) => {
     res.render("account", { user_id: req.session.user_id })
 })
 
-app.get("/dashboard/create-listing", (req, res) => {
+app.get("/user/dashboard/create-listing", (req, res) => {
     res.render("newListing", { user_id: req.session.user_id });
   });
 
-app.get("/dashboard/listing", async (req, res) => {
+app.get("/user/dashboard/listing", async (req, res) => {
     res.render("editListing", {user_id: req.session.user_id, listing_id:req.query.id});
 })
 
@@ -252,7 +263,7 @@ app.get("/api/userbyid", catchAsync(async(req,res) => {
 app.get("/api/deletenotification", catchAsync(async(req,res) => {
     const { id } = req.query;
         const notification = await Notification.findOneAndDelete({ _id: id });
-        res.redirect("/dashboard/notifications");
+        res.redirect("/admin/dashboard/notifications");
 }))
 
 app.get("/api/delete-listing", catchAsync(async (req, res) => {
@@ -265,6 +276,16 @@ app.get("/api/delete-listing", catchAsync(async (req, res) => {
     const deletedListing = await Listing.findByIdAndDelete(id);
     req.flash("success", "Listing deleted");
     res.render("dashboard", {user_id:req.session.user_id}); 
+}));
+
+app.get("/api/delete-user", catchAsync(async (req, res) => {
+    const { id } = req.query;
+    const user = await getUser(id);
+    await Listing.deleteMany({username:user.username});
+    await User.findOneAndDelete({username:user.username});
+    req.session.user_id = null;
+    req.flash("success", "Account deleted, sad to see you go!");
+    res.render("login"); 
 }));
 
 
@@ -322,7 +343,7 @@ app.post("/register",validateSchemaMiddleware('user'), catchAsync(async(req, res
     notification.save();
     req.session.user_id = user._id;
     req.flash("success", "Welcome to OLX!");
-    res.redirect("/dashboard");
+    res.redirect("/user/dashboard");
 }));
 
 app.post("/login", catchAsync(async (req,res) => {
@@ -333,11 +354,19 @@ app.post("/login", catchAsync(async (req,res) => {
         res.redirect("/login");
     }
     else {
+
         const valid = await bcrypt.compare(password, user.password);
         if (valid) {
-            req.session.user_id = user._id;
-            req.flash("success", "Logged in successfully");
-            res.redirect("/dashboard");
+            if (user.role === "admin") {
+                req.session.admin_id = user._id;
+                req.flash("success", "Logged in as admin");
+                res.redirect("/admin/dashboard");
+            }
+            else {
+                req.session.user_id = user._id;
+                req.flash("success", "Logged in successfully");
+                res.redirect("/user/dashboard");
+            }
         }
         else {
             req.flash("danger", "Login details are incorrect");
@@ -352,7 +381,7 @@ app.post("/logout", (req,res) => {
     res.redirect("/login");
 })
 
-app.post("/dashboard/create-listing", upload.single("image"), validateSchemaMiddleware('listing'),
+app.post("/user/dashboard/create-listing", upload.single("image"), validateSchemaMiddleware('listing'),
   catchAsync(async (req, res) => {
     const { title, username, description, price, category, area } = req.body;
     const imagePath = req.file ? req.file.path : null;
@@ -370,10 +399,10 @@ app.post("/dashboard/create-listing", upload.single("image"), validateSchemaMidd
     const notification = new Notification({description:`Listing successfully created, please note that the admin may edit or remove your listing should it be inappropriate`, username:username})
     await notification.save();
     req.flash("success", "New listing created");
-    res.redirect("/dashboard");
+    res.redirect("/user/dashboard");
 }));
 
-app.post("/dashboard/edit-listing", upload.single("image"), validateSchemaMiddleware('listing'),
+app.post("/user/dashboard/edit-listing", upload.single("image"), validateSchemaMiddleware('listing'),
   catchAsync(async (req, res) => {
     const {id, image} = req.query;
     const { title, username, description, price, category, area } = req.body;
@@ -389,7 +418,7 @@ app.post("/dashboard/edit-listing", upload.single("image"), validateSchemaMiddle
     const notification = new Notification({description:`Listing successfully updated`, username:username})
     await notification.save();
     req.flash("success", "Listing updated");
-    res.redirect(`/dashboard/listing?id=${id}`);
+    res.redirect(`/user/dashboard/listing?id=${id}`);
 }));
 
 
@@ -449,7 +478,7 @@ app.post("/api/update-account/:_id", validateSchemaMiddleware('user'), catchAsyn
     const notification = new Notification({description:`You changed your account details`, username:username})
     await notification.save();
     req.flash("success", "Account updated successfully");
-    res.redirect("/dashboard/account");
+    res.redirect("/admin/dashboard/account");
 }));
 
 

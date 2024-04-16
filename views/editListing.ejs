@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/css/listings.css">
     <link rel="icon" type="image/png" href="/public/images/favicon.png" sizes="128x128">
-
+    <link rel="stylesheet" href="/public/css/modal.css">
     <title>Edit listing</title>
     <style>
         #image {
@@ -15,40 +15,7 @@
             max-height: none;
             margin-left: 50px;
         }
-        .modal {
-          display: none;
-          position: fixed;
-          z-index: 1;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, 0.5);
-        }
 
-        .modal-content {
-          background-color: #fefefe;
-          margin: 15% auto;
-          padding: 20px;
-          border: 1px solid #888;
-          width: 80%;
-          max-width: 400px;
-          text-align: center;
-        }
-
-        .close {
-          color: #aaa;
-          float: right;
-          font-size: 28px;
-          font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-          color: black;
-          text-decoration: none;
-          cursor: pointer;
-        }
 
     </style>
 </head>
@@ -65,7 +32,7 @@
         <%- include("../views/partials/dashboard-header") %>
         <h1>Edit listing</h1>
         <img id="image" src="" alt="">
-        <form class="left-form" action="/dashboard/edit-listing" method="POST" enctype="multipart/form-data">
+        <form class="left-form" action="/admin/dashboard/edit-listing" method="POST" enctype="multipart/form-data">
           <input required type="hidden" name="username" id="username" value="boo">
           <div class="inputGroup row">
             <div class="inputDiv mr">
@@ -167,7 +134,7 @@
             closeModal();
             const listing_id = "<%= listing_id %>";
             await deleteListing(listing_id);
-            window.location.href = "/dashboard";
+            window.location.href = "/user/dashboard";
         }
     
         deleteButton.addEventListener("click", function() {
