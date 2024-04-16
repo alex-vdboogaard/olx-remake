@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/public/images/favicon.png" sizes="128x128">
+
+    <title>Create account</title>
+</head>
+<body>
+    <%- include("../views/partials/website-nav") %>
+    <main class="center-div">
+        <h1>Nice to meet you!</h1>
+        <p class="center-grey">Fill in your details below to join OLX!</p>
+        <form action="/register" method="post" class="create-account-form">
+            <div class="inputGroup row">
+                <div class="mr">
+                    <div class="inputDiv">
+                        <label for="governmentId">Government ID</label>
+                        <input type="text" required name="governmentId" id="governmentId" placeholder="0123456789123">
+                    </div>
+                    <div class="inputDiv">
+                        <label for="username">Username</label>
+                        <input type="text" required name="username" id="username" placeholder="username">
+                    </div>
+                    <div class="inputDiv">
+                        <label for="password">Password</label>
+                        <input type="password" required name="password" id="password" placeholder="password">
+                    </div>
+                </div>
+                <div>
+                    <div class="inputDiv">
+                        <label for="First name">First name</label>
+                        <input type="text" required name="firstName" id="firstName" placeholder="Alex">
+                    </div>
+                    <div class="inputDiv">
+                        <label for="lastName">Last name</label>
+                        <input type="text" required name="lastName" id="lastName" placeholder="van den Boogaard">
+                    </div>
+                    <div class="inputDiv">
+                        <label for="cell">Cell phone</label>
+                        <input type="text" required name="cell" id="cell" placeholder="0622681175">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="button btn-green center">Join OLX</button>
+                <p>Already have an account? <a href="/login">Log in.</a></p>
+        </form>
+    </main>
+</body>
+</html>

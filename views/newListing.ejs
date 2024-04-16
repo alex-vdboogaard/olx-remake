@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/public/images/favicon.png" sizes="128x128">
+    <link rel="stylesheet" href="/public/css/listings.css">
+    <title>New listing</title>
+</head>
+<body>
+    <%- include("../views/partials/dashboard-nav") %>
+    <main>
+        <%- include("../views/partials/dashboard-header") %>
+        <h1>New listing</h1>
+        <form class="left-form" action="/dashboard/create-listing" method="POST" enctype="multipart/form-data">
+          <input required type="hidden" name="username" id="username" value="boo">
+          <div class="inputGroup row">
+            <div class="inputDiv mr">
+                <label for="title">Listing Title:</label>
+                <input required type="text" name="title" id="title" placeholder="Listing Title">
+              </div>
+              <div class="inputDiv">
+                <label for="description">Description:</label>
+                <textarea required type="text" name="description" id="description" placeholder="Description"></textarea>
+              </div>
+          </div>
+          <div class="inputGroup row">
+            <div class="inputDiv mr">
+              <label for="categoryFilter">Category:</label>
+              <select name="category" class="styled-select" aria-label="Category" id="categoryFilter">
+                <option value="">Category</option>
+              </select>
+            </div>
+            <div class="inputDiv">
+              <label for="areaFilter">Area:</label>
+              <select name="area" class="styled-select" aria-label="Location" id="areaFilter">
+                <option value="">Location</option>
+              </select>
+            </div>
+        </div>
+        <div class="inputGroup row">
+            <div class="inputDiv mr">
+              <label for="price">Price (R):</label>
+              <input required type="number" min="0" name="price" id="price" placeholder="Price">
+            </div>
+            <div class="inputDiv">
+                <label for="image">Listing image</label>
+                <input required type="file" name="image" id="image" accept=".jpg, .jpeg, .png">
+            </div>
+        </div>
+        <button class="submit-button btn-green" type="submit">Create Listing</button>
+
+          </form>
+        </div>  
+    </main>
+    <script src="/public/js/listings.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async function() {
+          const user_id = "<%= user_id %>"; 
+          fetch(`/api/userbyid?id=${user_id}`)
+            .then(response => response.json())
+            .then(user => {
+              document.querySelector("#username").value = user.username;
+              })
+              .catch(error => console.error('Error fetching user:', error)); 
+              const response = await populateFilters(); //add categories and areas from database
+              const category = document.getElementById('categoryFilter');
+              const area = document.getElementById('areaFilter');
+                
+              const areas = response.areas;
+              areas.forEach(areaObj => {
+                let option = document.createElement("option");
+                option.value = areaObj.description;
+                option.textContent = areaObj.description;
+                area.appendChild(option);
+              });
+              const categories = response.categories;
+              categories.forEach(categoryObj => {
+                let option = document.createElement("option");
+                option.value = categoryObj.description;
+                option.textContent = categoryObj.description;
+                category.appendChild(option);
+              });
+            });
+          
+      </script>
+</body>
+</html>

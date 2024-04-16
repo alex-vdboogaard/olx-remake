@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/listings.css">
+    <title>Dashboard</title>
+    <link rel="icon" type="image/png" href="/public/images/favicon.png" sizes="128x128">
+</head>
+<body>
+    <%- include("../views/partials/dashboard-nav") %>
+    <main>
+        <%- include("../views/partials/dashboard-header") %>
+        <div class="h1-new">
+          <h1>My listings</h1>
+          <a href="/dashboard/create-listing" class="new-listing" >New listing</a>
+        </div>
+        <div class="listings"></div>
+    </main>
+    <!--Load listings-->
+    <script src="/public/js/listings.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const user_id = "<%= user_id %>"; 
+        getListings(user_id);
+      });
+    </script>
+</body>
+</html>

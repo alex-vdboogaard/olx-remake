@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/singleListing.css">
+    <link rel="icon" type="image/png" href="/public/images/favicon.png" sizes="128x128">
+    <title>OLX - listing</title>
+    <style>
+        p {
+            margin: 0px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <%- include("../../views/partials/website-nav") %>
+    <main class="main-full-width" id="listing-main">        
+    </main>
+    <script src="/public/js/transformDate.js"></script>
+    <script src="/public/js/listings.js"></script>
+    <script>
+        const id = "<%= id %>";
+        const listing = getListing(id)
+        .then(listing => {
+            const user = getUser(listing.username);
+        const date = formatDate(listing.date);
+        const target = document.querySelector("main");
+        const div = document.createElement("div");
+        div.className = "top-info";
+        div.innerHTML = `
+            <img id="listing-image" src="${listing.image}" alt="${listing.title}">
+            <div class="listing-div">
+                <h1 class="h1">${listing.title}</h1>
+                <p>${listing.category}</p>
+                <p id="price">R${listing.price}</p>
+                <div id="location-div">
+                    <svg id="location-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.90062 9.97586C5.82856 10.0273 5.74223 10.0549 5.65369 10.0549C5.56516 10.0549 5.47883 10.0273 5.40676 9.97586C3.27742 8.45811 1.01757 5.3362 3.30212 3.08031C3.92908 2.46304 4.77385 2.1174 5.65369 2.11817C6.53559 2.11817 7.38177 2.46431 8.00527 3.07987C10.2898 5.33576 8.02996 8.45723 5.90062 9.97586Z" stroke="black" stroke-width="0.661422" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5.65436 6.08655C5.88825 6.08655 6.11256 5.99363 6.27795 5.82824C6.44334 5.66286 6.53625 5.43854 6.53625 5.20465C6.53625 4.97076 6.44334 4.74644 6.27795 4.58106C6.11256 4.41567 5.88825 4.32275 5.65436 4.32275C5.42046 4.32275 5.19615 4.41567 5.03076 4.58106C4.86537 4.74644 4.77246 4.97076 4.77246 5.20465C4.77246 5.43854 4.86537 5.66286 5.03076 5.82824C5.19615 5.99363 5.42046 6.08655 5.65436 6.08655Z" stroke="black" stroke-width="0.661422" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg><p class="location">${listing.area}</p>
+                </div>
+                <p>Date listed: ${date}</p>
+                <p>Seller: ${listing.username}</p>
+                <a id="message-seller" href="tel:${user.cell}" target="_blank">Contact this seller</a>
+            </div>`;
+        const description = document.createElement("div");
+        description.className = "description-div";
+        description.innerHTML = `<h2>Description</h2>
+            <p>${listing.description}</p>`;
+        target.appendChild(div);
+        target.appendChild(description);
+        })
+        .catch(error => {
+        });
+        
+    </script>
+</body>
+</html>

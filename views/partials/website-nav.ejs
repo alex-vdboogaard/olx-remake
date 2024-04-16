@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="/public/css/basics.css">
+<link rel="stylesheet" href="/public/css/website.css">
+<link rel="stylesheet" href="/public/css/listings.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="icon" type="image/png" href="/public/images/favicon.png" sizes="64x64">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+ <nav class="top-nav">
+        <a href="/"><img src="/public/images/OLX-logo.png" class="olx-logo" alt="OLX logo"></a>
+        <div class="nav-rightLinks">
+            <a href="/">Home</a>
+            <a href="/listings">Listings</a>
+            <a href="/contact">Contact us</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/login" id="login"><svg width="15" height="15" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.5508 20.7031C21.0635 18.1318 18.7715 16.2881 16.0967 15.414C17.4198 14.6264 18.4477 13.4262 19.0227 11.9978C19.5977 10.5694 19.6878 8.99177 19.2794 7.50716C18.8709 6.02254 17.9864 4.71305 16.7617 3.77978C15.537 2.84651 14.0398 2.34106 12.5 2.34106C10.9603 2.34106 9.46305 2.84651 8.23834 3.77978C7.01363 4.71305 6.12913 6.02254 5.72068 7.50716C5.31223 8.99177 5.40241 10.5694 5.97737 11.9978C6.55233 13.4262 7.58028 14.6264 8.90336 15.414C6.22855 16.2871 3.93656 18.1308 2.44925 20.7031C2.39471 20.792 2.35853 20.891 2.34286 20.9941C2.32718 21.0973 2.33232 21.2025 2.35797 21.3036C2.38362 21.4048 2.42927 21.4997 2.49222 21.5829C2.55516 21.6661 2.63413 21.7359 2.72447 21.788C2.81481 21.8402 2.91469 21.8738 3.01821 21.8867C3.12173 21.8997 3.22679 21.8918 3.3272 21.8635C3.42762 21.8352 3.52134 21.787 3.60286 21.7219C3.68437 21.6568 3.75201 21.576 3.80179 21.4843C5.64164 18.3047 8.89359 16.4062 12.5 16.4062C16.1065 16.4062 19.3584 18.3047 21.1983 21.4843C21.2481 21.576 21.3157 21.6568 21.3972 21.7219C21.4787 21.787 21.5725 21.8352 21.6729 21.8635C21.7733 21.8918 21.8783 21.8997 21.9819 21.8867C22.0854 21.8738 22.1853 21.8402 22.2756 21.788C22.3659 21.7359 22.4449 21.6661 22.5079 21.5829C22.5708 21.4997 22.6164 21.4048 22.6421 21.3036C22.6678 21.2025 22.6729 21.0973 22.6572 20.9941C22.6415 20.891 22.6054 20.792 22.5508 20.7031ZM7.03129 9.37497C7.03129 8.29335 7.35202 7.23603 7.95294 6.3367C8.55385 5.43737 9.40795 4.73642 10.4072 4.3225C11.4065 3.90859 12.5061 3.80029 13.5669 4.0113C14.6278 4.22231 15.6022 4.74316 16.367 5.50798C17.1318 6.2728 17.6527 7.24724 17.8637 8.30807C18.0747 9.36891 17.9664 10.4685 17.5525 11.4678C17.1386 12.4671 16.4376 13.3212 15.5383 13.9221C14.639 14.523 13.5817 14.8437 12.5 14.8437C11.0501 14.8422 9.66001 14.2655 8.63476 13.2402C7.60951 12.215 7.03284 10.8249 7.03129 9.37497Z" fill="#363636"/>
+                </svg> Log in</a>
+        </div>
+</nav>
+<div class="alert-container">
+    <% if (successMessages && successMessages.length > 0) { %>
+        <% successMessages.forEach(function(message) { %>
+            <div class="alert alert-success" role="alert">
+                <span class="white"><%= message %></span>
+                <span class="close" style="color: white;" onclick="this.parentElement.style.display='none';">&times;</span>
+            </div>
+        <% }); %>
+    <% } %>
+
+    <% if (dangerMessages && dangerMessages.length > 0) { %>
+        <% dangerMessages.forEach(function(message) { %>
+            <div class="alert alert-danger" role="alert">
+                <span class="white"><%= message %></span>
+                <span class="close" style="color: white;" onclick="this.parentElement.style.display='none';">&times;</span>
+            </div>
+        <% }); %>
+    <% } %>
+</div>
+
+<script src="/public/js/messages.js"></script>

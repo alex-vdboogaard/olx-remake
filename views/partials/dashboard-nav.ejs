@@ -1,0 +1,59 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/public/css/basics.css">
+<link rel="stylesheet" href="/public/css/dashboard/dashboard-nav.css">
+<link rel="stylesheet" href="/public/css/dashboard/dashboard.css">
+<nav class="side-nav">
+    <a href="/dashboard" class="nav-a top"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13 9V3H21V9H13ZM3 13V3H11V13H3ZM13 21V11H21V21H13ZM3 21V15H11V21H3ZM5 11H9V5H5V11ZM15 19H19V13H15V19ZM15 7H19V5H15V7ZM5 19H9V17H5V19Z" fill="#EDEDED"/>
+        </svg><p class="nav-a-text">Dashboard</p></a>
+    <a href="/dashboard/notifications" class="nav-a" id="not-count-a"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_2097_176)">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M14.9998 19C15 19.5046 14.8094 19.9906 14.4664 20.3605C14.1233 20.7305 13.653 20.9572 13.1498 20.995L12.9998 21H10.9998C10.4953 21.0002 10.0093 20.8096 9.6393 20.4665C9.26932 20.1234 9.04269 19.6532 9.00485 19.15L8.99985 19H14.9998ZM11.9998 2C13.8148 1.99997 15.5589 2.70489 16.8641 3.96607C18.1693 5.22726 18.9336 6.94609 18.9958 8.76L18.9998 9V12.764L20.8218 16.408C20.9014 16.567 20.9412 16.7429 20.9378 16.9206C20.9345 17.0984 20.8881 17.2727 20.8027 17.4286C20.7173 17.5845 20.5953 17.7174 20.4473 17.8158C20.2993 17.9143 20.1297 17.9754 19.9528 17.994L19.8378 18H4.16185C3.98401 18.0001 3.80882 17.957 3.65127 17.8745C3.49372 17.792 3.35853 17.6725 3.25727 17.5264C3.156 17.3802 3.0917 17.2116 3.06985 17.0351C3.04801 16.8586 3.06928 16.6795 3.13185 16.513L3.17785 16.408L4.99985 12.764V9C4.99985 7.14348 5.73735 5.36301 7.0501 4.05025C8.36286 2.7375 10.1433 2 11.9998 2ZM11.9998 4C10.7114 4.00007 9.47269 4.49754 8.54207 5.38866C7.61146 6.27978 7.06077 7.49575 7.00485 8.783L6.99985 9V12.764C6.99986 13.012 6.95374 13.2579 6.86385 13.489L6.78885 13.659L5.61885 16H18.3818L17.2118 13.658C17.1009 13.4363 17.032 13.1959 17.0088 12.949L16.9998 12.764V9C16.9998 7.67392 16.4731 6.40215 15.5354 5.46447C14.5977 4.52678 13.3259 4 11.9998 4Z" fill="white"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_2097_176">
+        <rect width="24" height="24" fill="white"/>
+        </clipPath>
+        </defs>
+        </svg><p class="nav-a-text">Notifications<p id="not-count" class="hidden">0</p></p></a>
+        <a href="/dashboard/account" class="nav-a"><svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.5513 20.7031C21.064 18.1318 18.772 16.2881 16.0972 15.414C17.4203 14.6264 18.4482 13.4262 19.0232 11.9978C19.5982 10.5694 19.6883 8.99177 19.2799 7.50716C18.8714 6.02254 17.9869 4.71305 16.7622 3.77978C15.5375 2.84651 14.0403 2.34106 12.5005 2.34106C10.9607 2.34106 9.46354 2.84651 8.23883 3.77978C7.01412 4.71305 6.12962 6.02254 5.72117 7.50716C5.31272 8.99177 5.40289 10.5694 5.97785 11.9978C6.55281 13.4262 7.58077 14.6264 8.90384 15.414C6.22904 16.2871 3.93705 18.1308 2.44974 20.7031C2.3952 20.792 2.35902 20.891 2.34334 20.9941C2.32767 21.0973 2.33281 21.2025 2.35846 21.3036C2.38411 21.4048 2.42976 21.4997 2.4927 21.5829C2.55565 21.6661 2.63462 21.7359 2.72496 21.788C2.8153 21.8402 2.91518 21.8738 3.0187 21.8867C3.12221 21.8997 3.22728 21.8918 3.32769 21.8635C3.42811 21.8352 3.52183 21.787 3.60334 21.7219C3.68485 21.6568 3.7525 21.576 3.80228 21.4843C5.64213 18.3047 8.89408 16.4062 12.5005 16.4062C16.107 16.4062 19.3589 18.3047 21.1988 21.4843C21.2486 21.576 21.3162 21.6568 21.3977 21.7219C21.4792 21.787 21.5729 21.8352 21.6734 21.8635C21.7738 21.8918 21.8788 21.8997 21.9824 21.8867C22.0859 21.8738 22.1857 21.8402 22.2761 21.788C22.3664 21.7359 22.4454 21.6661 22.5083 21.5829C22.5713 21.4997 22.6169 21.4048 22.6426 21.3036C22.6682 21.2025 22.6734 21.0973 22.6577 20.9941C22.642 20.891 22.6058 20.792 22.5513 20.7031ZM7.03177 9.37497C7.03177 8.29335 7.35251 7.23603 7.95342 6.3367C8.55434 5.43737 9.40844 4.73642 10.4077 4.3225C11.407 3.90859 12.5066 3.80029 13.5674 4.0113C14.6283 4.22231 15.6027 4.74316 16.3675 5.50798C17.1323 6.2728 17.6532 7.24724 17.8642 8.30807C18.0752 9.36891 17.9669 10.4685 17.553 11.4678C17.1391 12.4671 16.4381 13.3212 15.5388 13.9221C14.6395 14.523 13.5821 14.8437 12.5005 14.8437C11.0506 14.8422 9.6605 14.2655 8.63525 13.2402C7.60999 12.215 7.03332 10.8249 7.03177 9.37497Z" fill="white"/>
+            </svg><p class="nav-a-text">Account</p></a>
+        
+    <a href="/logout" class="nav-a bottom"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 8V6C15 5.46957 14.7893 4.96086 14.4142 4.58579C14.0391 4.21071 13.5304 4 13 4H6C5.46957 4 4.96086 4.21071 4.58579 4.58579C4.21071 4.96086 4 5.46957 4 6V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20H13C13.5304 20 14.0391 19.7893 14.4142 19.4142C14.7893 19.0391 15 18.5304 15 18V16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M21 12H8M8 12L11 9M8 12L11 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p class="nav-a-text">Log out</p></a>           
+</nav>
+
+<div class="alert-container">
+    <% if (successMessages && successMessages.length > 0) { %>
+        <% successMessages.forEach(function(message) { %>
+            <div class="alert alert-success" role="alert">
+                <span><%= message %></span>
+                <span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
+            </div>
+        <% }); %>
+    <% } %>
+
+    <% if (dangerMessages && dangerMessages.length > 0) { %>
+        <% dangerMessages.forEach(function(message) { %>
+            <div class="alert alert-danger" role="alert">
+                <span><%= message %></span>
+                <span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
+            </div>
+        <% }); %>
+    <% } %>
+</div>
+
+<script src="/public/js/messages.js"></script>
+<script src="/public/js/notifications.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const user_id = "<%= user_id %>";
+      notificationCount(user_id);
+    });
+  </script>

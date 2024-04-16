@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/dashboard/dashboard.css">
+    <link rel="icon" type="image/png" href="/public/images/favicon.png" sizes="128x128">
+    <title>Account</title>
+    <link rel="stylesheet" href="/public/css/basics.css">
+</head>
+<body>
+    <%- include("../views/partials/dashboard-nav") %>
+    <main>
+        <%- include("../views/partials/dashboard-header") %>
+        <h1>Account</h1>
+        <form class="left-form" action="/api/update-account" method="POST">
+            <div class="inputGroup row">
+                <div class="inputDiv mr">
+                    <label for="governmentId">Government ID</label>
+                    <input type="text" id="governmentIdPublic" disabled>
+                    <input type="text" id="governmentId" name="governmentId" hidden>
+                </div>
+                <div class="inputDiv">
+                    <label for="username">Username</label>
+                    <input type="text" id="usernamePublic" disabled>
+                    <input type="text" id="username" name="username" hidden>
+                </div>
+          </div>
+          <div class="inputGroup row">
+            <div class="inputDiv mr">
+                <label for="password">Password</label>
+                <input required placeholder="Password" type="password" name="password" id="password">
+            </div>
+            <div class="inputDiv">
+                <label for="firstName">First Name</label>
+                <input required type="text" name="firstName" id="firstName">
+            </div>
+          </div>
+          <div class="inputGroup row">
+            <div class="inputDiv mr">
+                <label for="lastName">Last Name</label>
+                <input required type="text" name="lastName" id="lastName">
+            </div>  
+            <div class="inputDiv">
+                <label for="cell">Cell phone number</label>
+                <input required type="text" name="cell" id="cell">
+            </div>
+          </div>
+          <button class="submit-button btn-green" type="submit">Save changes</button>
+        </form>
+        
+    </main>
+    <script src="/public/js/listings.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            //populate form
+            const userid = "<%= user_id %>";
+            fetch(`/api/userbyid?id=${userid}`)
+            .then(response => response.json())
+            .then(user => {
+              document.querySelector("#governmentIdPublic").value = user.governmentId;
+              document.querySelector("#governmentId").value = user.governmentId;
+              document.querySelector("#usernamePublic").value = user.username;
+              document.querySelector("#username").value = user.username;
+              document.querySelector("#firstName").value = user.firstName;
+              document.querySelector("#lastName").value = user.lastName;
+              document.querySelector("#cell").value = user.cell;
+              document.querySelector("form").action = `/api/update-account/${userid}`;
+              })
+              .catch(error => console.error('Error fetching user:', error)); 
+            });
+    </script>
+</body>
+</html>

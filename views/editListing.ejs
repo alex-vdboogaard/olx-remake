@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/listings.css">
+    <link rel="icon" type="image/png" href="/public/images/favicon.png" sizes="128x128">
+
+    <title>Edit listing</title>
+    <style>
+        #image {
+            max-width: 400px;
+            height: auto;
+            max-height: none;
+            margin-left: 50px;
+        }
+        .modal {
+          display: none;
+          position: fixed;
+          z-index: 1;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+          background-color: #fefefe;
+          margin: 15% auto;
+          padding: 20px;
+          border: 1px solid #888;
+          width: 80%;
+          max-width: 400px;
+          text-align: center;
+        }
+
+        .close {
+          color: #aaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+          color: black;
+          text-decoration: none;
+          cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="modal" id="confirmationModal">
+        <div class="modal-content">
+          <p>Are you sure you want to delete this listing?</p>
+          <button onclick="confirmDelete()">Yes, delete</button>
+          <button onclick="closeModal()">Cancel</button>
+        </div>
+      </div>
+    <%- include("../views/partials/dashboard-nav") %>
+    <main>
+        <%- include("../views/partials/dashboard-header") %>
+        <h1>Edit listing</h1>
+        <img id="image" src="" alt="">
+        <form class="left-form" action="/dashboard/edit-listing" method="POST" enctype="multipart/form-data">
+          <input required type="hidden" name="username" id="username" value="boo">
+          <div class="inputGroup row">
+            <div class="inputDiv mr">
+                <label for="title">Listing Title:</label>
+                <input required type="text" name="title" id="title" placeholder="Listing Title">
+              </div>
+              <div class="inputDiv">
+                <label for="description">Description:</label>
+                <textarea required type="text" name="description" id="description" placeholder="Description"></textarea>
+              </div>    
+          </div>
+          <div class="inputGroup row">
+            <div class="inputDiv mr">
+              <label for="categoryFilter">Category:</label>
+              <select name="category" class="styled-select" aria-label="Category" id="categoryFilter">
+                <option value="">Category</option>
+              </select>
+            </div>
+            <div class="inputDiv">
+              <label for="areaFilter">Area:</label>
+              <select name="area" class="styled-select" aria-label="Location" id="areaFilter">
+                <option value="">Area</option>
+              </select>
+            </div>
+        </div>
+        <div class="inputGroup row">
+            <div class="inputDiv mr">
+              <label for="price">Price (R):</label>
+              <input required type="number" min="0" name="price" id="price" placeholder="Price">
+            </div>
+            <div class="inputDiv">
+                <label for="image">Listing image</label>
+                <input style="margin: 0px;" type="file" name="image" id="image" accept=".jpg, .jpeg, .png">
+            </div>
+        </div>
+        <div class="button-group">
+            <button id="deleteButton" type="button" class="btn-red">Delete</button>
+            <button class="submit-button btn-green" type="submit">Save changes</button>
+        </div>
+          </form>
+        </div>  
+    </main>
+    <script src="/public/js/listings.js"></script>
+    <script>
+        var modal = document.getElementById("confirmationModal");
+    
+        document.addEventListener("DOMContentLoaded", async function() {
+            const user_id = "<%= user_id %>"; 
+            const listing_id = "<%= listing_id %>";
+            const modal = document.getElementById("confirmationModal");
+            const deleteButton = document.getElementById("deleteButton");
+            
+            // Fetch listing details and populate the page
+            const listing = await getListing(listing_id);
+            let image = listing.image.replace(/\\/g, '/');
+            image = "/" + image;
+            document.querySelector("#price").value = listing.price;
+            document.querySelector("#title").value = listing.title;
+            document.querySelector("#description").value = listing.description;
+            document.querySelector("img").src = image;
+            document.querySelector("img").alt = listing.title;
+            document.querySelector("#username").value = listing.username;
+            document.querySelector("form").action = `/dashboard/edit-listing?id=${listing._id}&image=${listing.image}`;
+
+            const response = await populateFilters(); // Add categories and areas from the database
+            const category = document.getElementById('categoryFilter');
+            const area = document.getElementById('areaFilter');
+
+            const listingCategory = listing.category;
+            const listingArea = listing.area;
+
+            const areas = response.areas;
+            areas.forEach(areaObj => {
+              let option = document.createElement("option");
+              if (areaObj.description === listingArea) {
+                option.selected = true;
+              }
+              option.value = areaObj.description;
+              option.textContent = areaObj.description;
+              area.appendChild(option);
+            });
+            const categories = response.categories;
+            categories.forEach(categoryObj => {
+              let option = document.createElement("option");
+              if (categoryObj.description === listingCategory) {
+                option.selected = true;
+              }
+              option.value = categoryObj.description;
+              option.textContent = categoryObj.description;
+              category.appendChild(option);
+            });
+        });
+    
+        function closeModal() {
+            modal.style.display = "none";
+        }
+    
+        async function confirmDelete() {
+            closeModal();
+            const listing_id = "<%= listing_id %>";
+            await deleteListing(listing_id);
+            window.location.href = "/dashboard";
+        }
+    
+        deleteButton.addEventListener("click", function() {
+            modal.style.display = "block";
+        });
+    </script>
+    
+</body>
+</html>

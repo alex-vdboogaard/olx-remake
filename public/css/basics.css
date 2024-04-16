@@ -1,0 +1,275 @@
+:root {
+    --grey: #7F7F7F;
+    --green: #0F8C50;
+    --dark-grey: #333138;
+    --btn-white: #FAFAFA;
+    --light-grey: #cccccc;
+}
+
+body {
+    font-family: Inter;
+    overflow-x: hidden;
+}
+
+h1 {
+    color: black;
+    font-size: 80px;
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+.center-grey {
+    color: var(--grey);
+    text-align: center;
+    font-size: 25px;
+    max-width: 400px;
+    margin-top: 0px;
+}
+
+.center-div {
+    flex-direction: column;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputDiv {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+input, textarea, select {
+    padding: 10px 20px !important;
+    min-width: 300px !important;
+    font-size: 20px !important;
+    border: 1px solid;
+    border-color: var(--light-grey);
+    position: relative;
+}
+
+.styled-select {
+    padding: 10px 20px !important;
+    min-width: 340px !important;
+    font-size: 20px !important;
+    border: 1px solid;
+    border-color: var(--light-grey);
+    position: relative;
+  }
+  
+  /* Add custom arrow */
+  .styled-select select::after {
+    content: "\25BC";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  
+  /* Style options */
+  .styled-select option {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+  
+  /* Style hover effect */
+  .styled-select option:hover {
+    background-color: #f1f1f1;
+  }
+
+
+
+option {
+    border-radius: 0px;
+    padding: 10px;
+    font-size: 18px;
+}
+
+label {
+    margin-bottom: 6px;
+}
+
+input[type="file"] {
+    position: relative;
+    background-color: none;
+    max-width: 200px;
+  }
+  
+  input[type="file"]::file-selector-button {
+    color: transparent;
+    background-color: white;
+    border: none;
+    margin-right: 10px;
+  }
+  
+  input[type="file"]::before {
+    position: absolute;
+    pointer-events: none;
+    top: 10px;
+    left: 16px;
+    height: 20px;
+    width: 20px;
+    content: "";
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230964B0'%3E%3Cpath d='M18 15v3H6v-3H4v3c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h-2zM7 9l1.41 1.41L11 7.83V16h2V7.83l2.59 2.58L17 9l-5-5-5 5z'/%3E%3C/svg%3E");
+  }
+  
+  input[type="file"]::after {
+    position: absolute;
+    pointer-events: none;
+    top: 11px;
+    left: 40px;
+    color: #0964b0;
+    content: "Upload File";
+  }
+
+button {
+    padding: 12px 20px;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.6s;
+}
+
+.btn-green {
+    background-color: var(--green);
+    color: var(--btn-white);
+    margin-top: 30px;
+    padding: 12px 20px;
+    font-size: 20px;
+}
+
+.btn-red {
+    background-color: rgb(173, 16, 16);
+    color: var(--btn-white);
+    margin-top: 30px;
+    padding: 12px 20px;
+    font-size: 20px;
+}
+
+.nav-middleLinks {
+    color: white;
+}
+
+.btn-green:hover {
+    background-color: #07693a;
+    color: var(--btn-white);
+}
+
+a {
+    color: var(--green);
+    text-decoration: none;
+}
+
+.mr {
+    margin-right: 20px;
+}
+
+.center {
+    max-width: 300px;
+    width: 100%;
+    align-self: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.create-account-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.alert-container {
+    position: fixed;
+    top: 50px; 
+    left: 50%; 
+    transform: translateX(-50%);
+    width: 300px; 
+    z-index: 1000; 
+    color: var(--btn-white) !important;
+}
+
+.alert {
+    position: relative;
+    padding: 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: var(--btn-white) !important;
+
+}
+
+.alert-success {
+    background-color: #3b8f1a;
+    border-color: #d6e9c6;
+    color: var(--btn-white) !important;
+
+}
+
+.alert-danger {
+    color: var(--btn-white) !important;
+    background-color: #e21c1c;
+    border-color: #ebccd1;
+
+}
+
+.close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+}
+
+  /* Width and height of scrollbar track */
+  ::-webkit-scrollbar {
+    width: 6px; /* width of the scrollbar */
+    height: 6px; /* height of the scrollbar */
+    border-radius: 10px; /* border radius of the scrollbar */
+  }
+  
+  /* Track (the background) */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; /* color of the track */
+  }
+  
+  /* Handle (the draggable part) */
+  ::-webkit-scrollbar-thumb {
+    background: #188c3e; /* color of the handle */
+    border-radius: 10px; /* border radius of the handle */
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #0f6e2d; /* color of the handle on hover */
+  }
+
+  .submit-button {
+    margin-bottom: 50px;
+  }
+  
+  .left-form {
+    align-self: flex-start;
+    padding: 50px;
+    padding-top: 20px;
+    align-items: flex-start;
+  }

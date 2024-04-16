@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/public/images/favicon.png" sizes="128x128">
+    <title>OLX - listings</title>
+</head>
+<body>
+    <%- include("../../views/partials/website-nav") %>
+    <main class="main-full-width">
+        <h1 class="left-h1 top-h1">Listings</h1>
+        <div class="filters-div">
+            <form action="/filter">
+                <select class="styled-dropdown" aria-label="Category" id="categoryFilter">
+                    <option value="">Category</option>
+                  </select>
+                  <select class="styled-dropdown" aria-label="Price (R)" id="priceFilter">
+                    <option value="">Price</option> 
+                    <option value="100"><= 100</option> 
+                    <option value="500"><= 500</option> 
+                    <option value="1000"><= 1000</option> 
+                    <option value="2000"><= 2000</option> 
+                    <option value="5000"><= 5000</option> 
+                    <option value="10000"><= 10000</option> 
+                  </select>
+                  <select class="styled-dropdown" aria-label="Location" id="areaFilter">
+                    <option value="">Location</option>
+                  </select>
+            </form>
+            <button style="margin: 0px; font-size: 15px;" class="btn btn-green" onclick="resetFilters()">Reset</button>
+        </div>
+        <div class="listings"></div>
+    </main>
+    <script src="/public/js/listings.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function() {
+        filterListings(); // Initial loading of listings
+        const response = await populateFilters(); //add categories and areas from database
+        const category = document.getElementById('categoryFilter');
+        const area = document.getElementById('areaFilter');
+        category.addEventListener('change', filterListings);
+        area.addEventListener('change', filterListings);
+        document.getElementById('priceFilter').addEventListener('change', filterListings);
+
+        const areas = response.areas;
+        areas.forEach(areaObj => {
+          let option = document.createElement("option");
+          option.value = areaObj.description;
+          option.textContent = areaObj.description;
+          area.appendChild(option);
+        });
+        const categories = response.categories;
+        categories.forEach(categoryObj => {
+          let option = document.createElement("option");
+          option.value = categoryObj.description;
+          option.textContent = categoryObj.description;
+          category.appendChild(option);
+        });
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/public/images/favicon.png" sizes="128x128">
+    <title>Log in</title>
+</head>
+<body>
+    <%- include("../views/partials/website-nav") %>
+        <main class="center-div">
+        <h1>Welcome back!</h1>
+        <p class="center-grey">Fill in your details below to access your dashboard</p>
+        <form action="/login" method="post">
+            <div class="inputGroup">
+                <div class="inputDiv">
+                    <label for="username">Username</label>
+                    <input type="text" value="alex_boogaard" required name="username" id="username" placeholder="username">
+                </div>
+                <div class="inputDiv">
+                    <label for="password">Password</label>
+                    <input type="password" value="Alex1234!!" required name="password" id="password" placeholder="password">
+                </div>
+                <button type="submit" class="button btn-green">Log in</button>
+                <p>Don't have an account? <a href="/create-account">Create an account.</a></p>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

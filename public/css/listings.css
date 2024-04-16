@@ -1,0 +1,142 @@
+body {
+    font-family: Inter;
+    overflow-x: hidden;
+}
+
+main {
+  overflow-y: scroll;
+}
+
+.filters-div {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.form-select {
+    margin-right: 5px;
+}
+
+.listing {
+    padding:20px;
+    background-color: #ECECEC;
+    border-radius: 10px;
+    margin: 20px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    cursor: pointer;
+}
+
+.listing:hover {
+    background-color: beige;
+}
+
+.listings {
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+}
+
+h3 {
+    font-weight: 600;
+    font-size: 30px;
+    margin: 0px;
+    margin-top: 10px;
+}
+
+.location-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.price {
+    font-size: 26px;
+    font-weight: 500;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.category {
+    color: #4C4C4C;
+    margin-top: 0px;
+}
+
+img {
+    width: auto;
+    max-width: 300px;
+    max-height: 200px;
+    margin-bottom: 0px;
+}
+
+#location {
+    margin: 0px;
+    width: 17px;
+    height: 17px;
+    margin-right: 5px;
+}
+
+/* Hide default select arrow */
+.styled-dropdown {
+    margin: 0px 10px 0px 0px;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 16px;
+    height: 45px;
+    cursor: pointer;
+  }
+  
+  /* Add custom arrow */
+  .styled-dropdown select::after {
+    content: "\25BC";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  
+  /* Style options */
+  .styled-dropdown option {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+  
+  /* Style hover effect */
+  .styled-dropdown option:hover {
+    background-color: #f1f1f1;
+  }
+
+  .top-h1 {
+    margin-top: 0px;
+  }
+  
+  .a-link {
+    color: black;
+    transition: none;
+    box-shadow: none;
+  }
+  
+  .a-link:hover {
+    color: black;
+    box-shadow: none;
+    border: 0px solid transparent;
+  }
+  
