@@ -75,13 +75,6 @@ app.use("/admin", (req, res, next) => {
     next();
 })
 
-app.use("/api", (req, res, next) => {
-    if (!req.session.user_id) {
-        req.flash("danger", "Please login")
-        return res.redirect("/login");
-    }
-    next();
-})
 
 //encryption and hash functions
 const hashPassword = async(userPassword) => {
