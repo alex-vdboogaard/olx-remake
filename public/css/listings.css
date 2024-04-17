@@ -13,6 +13,11 @@ main {
   justify-content: start;
 }
 
+.description-div p {
+  line-height: 1.5;
+  font-size: 25px;
+}
+
 form {
     display: flex;
     flex-direction: row;
