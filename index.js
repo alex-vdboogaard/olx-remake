@@ -125,6 +125,15 @@ async function seedData(model, fileName) {
 }
 
 app.get('/seed-data', catchAsync(async (req, res) => {
+    //delete data in case already seeded:
+    await User.deleteMany();
+    await Area.deleteMany();
+    await UserContact.deleteMany();
+    await Category.deleteMany();
+    await Listing.deleteMany();
+    await Notification.deleteMany();
+
+    //load seed data
     const seedDataDir = path.join(__dirname, "seedData");
     await seedData(User, path.join(seedDataDir, "OLX.users.json"));
     await seedData(Area, path.join(seedDataDir, "OLX.areas.json"));
@@ -136,6 +145,7 @@ app.get('/seed-data', catchAsync(async (req, res) => {
     res.redirect("/login");
 }));
 
+//find and return user object based on id of user
 async function getUser(id) {
     const user = await User.findById(id);
     return user;

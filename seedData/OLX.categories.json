@@ -1,33 +1,21 @@
 [
   {
-    "description": "Men's T-shirts"
-  },
-  {
-    "description": "Smartphones"
-  },
-  {
     "description": "Furniture"
   },
   {
-    "description": "Used Books"
+    "description": "Clothing and accessories"
   },
   {
-    "description": "Bicycles"
+    "description": "Electronics"
   },
   {
-    "description": "Board Games"
-  },
-  {
-    "description": "Skincare Products"
-  },
-  {
-    "description": "Car Parts"
+    "description": "Home appliances"
   },
   {
     "description": "Vintage Posters"
   },
   {
-    "description": "Baby Strollers"
+    "description": "Books and media"
   },
   {
     "description": "Other"

@@ -2,9 +2,100 @@
   "username": "alex_boogaard",
   "category": "Vintage Posters",
   "area": "Pretoria",
-  "title": "Anakin Skywalker poster",
+  "title": "Anakin Skywalker",
   "description": "Behold the conflicted soul of Anakin Skywalker, a poster capturing the essence of a hero's tragic journey. Amidst swirling galaxies, his silhouette emerges, torn between the light and the dark. His gaze, intense and piercing, reflects the tumultuous struggle within. The iconic lightsaber, a symbol of both hope and despair, illuminates the path he must choose. With striking imagery and profound symbolism, this poster encapsulates the timeless tale of destiny and redemption.",
-  "price": 400,
+  "price": 800,
   "image": "uploads\\image-1713374518875.jpg",
   "date": "2024-04-17T17:21:58.885Z"
-}]
+},
+{
+  "username": "justin_bieber",
+  "category": "Furniture",
+  "area": "Johannesburg",
+  "title": "Antique Wooden Chair",
+  "description": "A beautifully crafted antique wooden chair, perfect for adding a touch of elegance to any room. Made from solid wood with intricate carvings, this chair is both stylish and sturdy.",
+  "price": 1200,
+  "image": "uploads\\image-1713376993562.webp",
+  "date": "2024-04-17T17:21:58.885Z"
+},
+{
+  "username": "emile_timberlake",
+  "category": "Clothing and accessories",
+  "area": "Cape Town",
+  "title": "Vintage Leather Bag",
+  "description": "A vintage leather bag with a timeless design. Made from high-quality leather, this bag is both stylish and durable, perfect for everyday use.",
+  "price": 600,
+  "image": "uploads\\image-1713377084155",
+  "date": "2024-04-17T17:21:58.885Z"
+},
+{
+  "username": "shaun_jenkins",
+  "category": "Electronics",
+  "area": "Durban",
+  "title": "Sony PlayStation 4",
+  "description": "A Sony PlayStation 4 in excellent condition. Comes with two controllers and a selection of games. Perfect for gaming enthusiasts!",
+  "price": 4500,
+  "image": "uploads\\image-1713377142035",
+  "date": "2024-04-17T17:21:58.885Z"
+},
+{
+  "username": "paul_reitz",
+  "category": "Home appliances",
+  "area": "Port Elizabeth",
+  "title": "KitchenAid Stand Mixer",
+  "description": "A KitchenAid stand mixer in great condition. Perfect for baking and cooking enthusiasts!",
+  "price": 2500,
+  "image": "uploads\\image-1713377174879",
+  "date": "2024-04-17T17:21:58.885Z"
+},
+{
+  "username": "jahrad_brah",
+  "category": "Vintage Posters",
+  "area": "Bloemfontein",
+  "title": "Star Wars Trilogy Poster Set",
+  "description": "A set of vintage Star Wars trilogy posters, featuring iconic artwork from the original films. Perfect for any Star Wars fan!",
+  "price": 1000,
+  "image": "uploads\\image-1713377219554",
+  "date": "2024-04-17T17:21:58.885Z"
+},
+{
+  "username": "justin_timberlake",
+  "category": "Books and media",
+  "area": "East London",
+  "title": "Harry Potter Complete Box Set",
+  "description": "The complete box set of Harry Potter books, including all seven novels in the series. Perfect for fans of the wizarding world!",
+  "price": 400,
+  "image": "uploads\\image-1713377278999.jpg",
+  "date": "2024-04-17T17:21:58.885Z"
+},
+{
+  "username": "antoinette_berg",
+  "category": "Other",
+  "area": "Polokwane",
+  "title": "Vintage Vinyl Records",
+  "description": "A collection of vintage vinyl records, featuring classic albums from the 60s and 70s. Perfect for music lovers!",
+  "price": 150,
+  "image": "uploads\\image-1713377324777.jpg",
+  "date": "2024-04-17T17:21:58.885Z"
+},
+{
+  "username": "shaun_boogaard",
+  "category": "Electronics",
+  "area": "Nelspruit",
+  "title": "Canon EOS Rebel",
+  "description": "A Canon EOS Rebel T7i DSLR camera in excellent condition. Comes with a kit lens and accessories. Perfect for photography enthusiasts!",
+  "price": 9000,
+  "image": "uploads\\image-1713377385994.png",
+  "date": "2024-04-17T17:21:58.885Z"
+},
+{
+  "username": "alex_boogaard",
+  "category": "Clothing and accessories",
+  "area": "Kimberley",
+  "title": "Vintage Leather Jacket",
+  "description": "A vintage leather jacket with a classic design. Made from high-quality leather, this jacket is both stylish and durable.",
+  "price": 750,
+  "image": "uploads\\image-1713377428423.jpg",
+  "date": "2024-04-17T17:21:58.885Z"
+}
+]
