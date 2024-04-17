@@ -172,7 +172,7 @@ app.get("/create-account", async (req, res) => {
 app.get("/listings", async (req, res) => {
     res.render("../public/website/listings");
 })
-app.get("/filter", async (req,res) => {
+app.get("/filter", catchAsync(async (req,res) => {
     const { category, area, price } = req.query;
     const filter = {};
     if (category) filter.category = category;
@@ -181,18 +181,30 @@ app.get("/filter", async (req,res) => {
 
     const listings = await Listing.find(filter);
     res.json(listings);
-})
+}))
+
+app.get("/search", catchAsync(async (req, res) => {
+    const { q } = req.query;
+    const listings = await Listing.find({$or: [{title: {$regex: new RegExp(q, "i")}},
+    {area: {$regex: new RegExp(q, "i")}},
+    {category: {$regex: new RegExp(q, "i")}}
+]});
+    res.json(listings);
+
+}));
+
+
 app.get("/listing", async (req, res) => {
     res.render("../public/website/listing", {id:req.query.id});
 })
 
-app.post("/contact", validateSchemaMiddleware('userContact'), async(req,res) => {
+app.post("/contact", validateSchemaMiddleware('userContact'), catchAsync( async(req,res) => {
     const { firstName, message, email } = req.body;
     const userContact = new UserContact({firstName, message, email});
     await userContact.save();
     req.flash("success", "Message sent successfully")
     res.redirect("/contact");
-})
+}))
 //only registered users  
 app.get("/user/dashboard", (req,res) => {
     res.render("dashboard", { user_id: req.session.user_id })
