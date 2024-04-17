@@ -1,0 +1,92 @@
+[
+  {
+    "governmentId": "0404065189865",
+    "username": "alex_boogaard",
+    "password": "$2b$12$j0uayxC.gHjWRgbp6Byd.esgzUFafsiTo1iv6stLfZ6bcpK.P5pUG",
+    "firstName": "Alex",
+    "lastName": "van den Boogaard",
+    "cell": "0622681175",
+    "role": "user"
+  },
+  {
+    "governmentId": "0404065184562",
+    "username": "justin_bieber",
+    "password": "$2b$12$1Wp3kdRak.m3cjnJTb1lw.OWR61MWMkxntOlbyop6oVb5c2OWtXWC",
+    "firstName": "Justin",
+    "lastName": "Bieber",
+    "cell": "0822958754",
+    "role": "user"
+  },
+  {
+    "governmentId": "0306128598965",
+    "username": "emile_timberlake",
+    "password": "$2b$12$XnXaSnMWO18sID/TLCZcfe0JRjDTUXa7v1vAmMqVAT.KqSzRTjSEK",
+    "firstName": "Emile",
+    "lastName": "Timberlake",
+    "cell": "0830625598",
+    "role": "user"
+  },
+  {
+    "governmentId": "0602036548741",
+    "username": "shaun_jenkins",
+    "password": "$2b$12$2cT0lzlhPyTFoO9IUFX4ves5exqVSi7fDtQoxBJhielRtjKk9bCdi",
+    "firstName": "Shaun",
+    "lastName": "Jenkins",
+    "cell": "0622659878",
+    "role": "user"
+  },
+  {
+    "governmentId": "9804040599878",
+    "username": "paul_reitz",
+    "password": "$2b$12$oGjUyAsFbpOFRE9/d6io0.AzGD4cXDEs9Or0I.hkyCHtXQxlHqsvi",
+    "firstName": "Paul",
+    "lastName": "Reitz",
+    "cell": "0878947787",
+    "role": "user"
+  },
+  {
+    "governmentId": "0401065189864",
+    "username": "jahrad_brah",
+    "password": "$2b$12$CMsd5oZHU.eRPkiyVRlP0O.gxia5IAJhdVDwuBhae809pSKFtUzPG",
+    "firstName": "Jahrad",
+    "lastName": "Schomper",
+    "cell": "0632691173",
+    "role": "user"
+  },
+  {
+    "governmentId": "0602036541741",
+    "username": "justin_timberlake",
+    "password": "$2b$12$smc/LXSFjK3Xdorcuyc6SutpEZbR.YeZoHyjGAqS.BCTZ/zkqca12",
+    "firstName": "Justin",
+    "lastName": "Timberlake",
+    "cell": "0698754457",
+    "role": "user"
+  },
+  {
+    "governmentId": "0602036548741",
+    "username": "antoinette_berg",
+    "password": "$2b$12$H7VUZmJtB4alzsogg6f2xemsMnX3Twwo5UXcXUj2KB1C0gFWOOmjO",
+    "firstName": "Antoinette",
+    "lastName": "van den Berg",
+    "cell": "0833092218",
+    "role": "user"
+  },
+  {
+    "governmentId": "6609285019081",
+    "username": "shaun_boogaard",
+    "password": "$2b$12$p2wVSj4sOjJ7wEKRhA.tjuT.1f5uG8B9g9OqAp5YMeEqRna041uua",
+    "firstName": "Shaunie",
+    "lastName": "van den Boogaard",
+    "cell": "0717451440",
+    "role": "user"
+  },
+  {
+    "governmentId": "0000000000000",
+    "username": "anakin_skywalker",
+    "password": "$2b$12$Zkm35es6Wb.xE7XJC5rQ.uhHLXBsjcRYhllREpudtosFbuX7cXHQm",
+    "firstName": "Anakin",
+    "lastName": "Skywalker",
+    "cell": "0000000000",
+    "role": "admin"
+  }
+]
