@@ -55,12 +55,17 @@ h1 {
 }
 
 input, textarea, select {
-    padding: 10px 20px !important;
-    min-width: 300px !important;
-    font-size: 20px !important;
+    padding: 10px 20px;
+    min-width: 300px;
+    font-size: 20px;
     border: 1px solid;
     border-color: var(--light-grey);
     position: relative;
+}
+
+#reveal {
+  min-width: 10px;
+  padding: none;
 }
 
 .styled-select {
