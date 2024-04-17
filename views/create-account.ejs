@@ -26,6 +26,11 @@
                     <div class="inputDiv">
                         <label for="password">Password</label>
                         <input type="password" required name="password" id="password" placeholder="password">
+                        <div style="display: flex; padding-top: 10px;">
+                            <input type="checkbox" id="reveal" onclick="showPassword()">
+                            <label for="reveal" style="margin: 0px; padding: 0px;">Show password</label>
+                        </div>
+
                     </div>
                 </div>
                 <div>
@@ -47,5 +52,15 @@
                 <p>Already have an account? <a href="/login">Log in.</a></p>
         </form>
     </main>
+    <script>
+        function showPassword() {
+          var passwordField = document.getElementById("password");
+          if (passwordField.type === "password") {
+            passwordField.type = "text";
+          } else {
+            passwordField.type = "password";
+          }
+        }
+    </script>
 </body>
 </html>
