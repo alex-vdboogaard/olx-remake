@@ -380,22 +380,29 @@ app.post("/logout", (req,res) => {
 app.post("/user/dashboard/create-listing", upload.single("image"), validateSchemaMiddleware('listing'),
   catchAsync(async (req, res) => {
     const { title, username, description, price, category, area } = req.body;
-    const imagePath = req.file ? req.file.path : null;
-    const listing = new Listing({
-      title: title,
-      username: username,
-      description: description,
-      price: price,
-      category: category,
-      area: area,
-      image: imagePath
-    });
-    
-    await listing.save();
-    const notification = new Notification({description:`Listing successfully created, please note that the admin may edit or remove your listing should it be inappropriate`, username:username})
-    await notification.save();
-    req.flash("success", "New listing created");
-    res.redirect("/user/dashboard");
+    const userListingsCount = await Listing.countDocuments({username:username});
+    if (userListingsCount >= 5) {
+        throw new ExpressError("You have reached the limit of listings allowed (5)");
+    }
+    else {
+        const imagePath = req.file ? req.file.path : null;
+        const listing = new Listing({
+          title: title,
+          username: username,
+          description: description,
+          price: price,
+          category: category,
+          area: area,
+          image: imagePath
+        });
+        
+        await listing.save();
+        const notification = new Notification({description:`Listing successfully created, please note that the admin may edit or remove your listing should it be inappropriate`, username:username})
+        await notification.save();
+        req.flash("success", "New listing created");
+        res.redirect("/user/dashboard");
+    }
+
 }));
 
 app.post("/user/dashboard/edit-listing", upload.single("image"), validateSchemaMiddleware('listing'),
@@ -474,7 +481,7 @@ app.post("/api/update-account/:_id", validateSchemaMiddleware('user'), catchAsyn
     const notification = new Notification({description:`You changed your account details`, username:username})
     await notification.save();
     req.flash("success", "Account updated successfully");
-    res.redirect("/admin/dashboard/account");
+    res.redirect("/user/dashboard/account");
 }));
 
 

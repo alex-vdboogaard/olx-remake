@@ -32,7 +32,7 @@
         <%- include("../views/partials/dashboard-header") %>
         <h1>Edit listing</h1>
         <img id="image" src="" alt="">
-        <form class="left-form" action="/admin/dashboard/edit-listing" method="POST" enctype="multipart/form-data">
+        <form class="left-form" action="/user/dashboard/edit-listing" method="POST" enctype="multipart/form-data">
           <input required type="hidden" name="username" id="username" value="boo">
           <div class="inputGroup row">
             <div class="inputDiv mr">
@@ -95,7 +95,7 @@
             document.querySelector("img").src = image;
             document.querySelector("img").alt = listing.title;
             document.querySelector("#username").value = listing.username;
-            document.querySelector("form").action = `/dashboard/edit-listing?id=${listing._id}&image=${listing.image}`;
+            document.querySelector("form").action = `/user/dashboard/edit-listing?id=${listing._id}&image=${listing.image}`;
 
             const response = await populateFilters(); // Add categories and areas from the database
             const category = document.getElementById('categoryFilter');
