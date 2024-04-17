@@ -326,6 +326,10 @@ app.get('/admin/create-notification', (req, res) => {
 //users
 app.post("/register",validateSchemaMiddleware('user'), catchAsync(async(req, res) => {
     const {governmentId, username, password, firstName, lastName, cell} = req.body;
+    const dupUser = await User.findOne({$or:[ {'username':username}, {'cell':cell}, {'governmentId':governmentId} ]});
+    if (dupUser) {
+        throw new ExpressError("Username or cellphone or goverment ID already exists.");
+    }
     const hashedPassword = await hashPassword(password); 
     const user = new User({ 
         governmentId: governmentId,
@@ -354,7 +358,6 @@ app.post("/login", catchAsync(async (req,res) => {
         res.redirect("/login");
     }
     else {
-
         const valid = await bcrypt.compare(password, user.password);
         if (valid) {
             if (user.role === "admin") {
