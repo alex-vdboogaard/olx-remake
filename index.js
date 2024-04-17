@@ -275,7 +275,14 @@ app.get("/api/userbyid", catchAsync(async(req,res) => {
 app.get("/api/deletenotification", catchAsync(async(req,res) => {
     const { id } = req.query;
         const notification = await Notification.findOneAndDelete({ _id: id });
-        res.redirect("/admin/dashboard/notifications");
+        res.redirect("/user/dashboard/notifications");
+}))
+
+app.get("/api/deleteallnotification", catchAsync(async(req,res) => {
+    const { id } = req.query;
+    const user = await getUser(id);
+    const notification = await Notification.deleteMany({ username: user.username });
+    res.redirect("/user/dashboard/notifications");
 }))
 
 app.get("/api/delete-listing", catchAsync(async (req, res) => {

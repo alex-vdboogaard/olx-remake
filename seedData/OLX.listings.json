@@ -1,12 +1,10 @@
-[
-  {
-    "username": "shaun_boogaard",
-    "category": "Men's T-shirts",
-    "area": "Cape Town",
-    "title": "Nike polo shirt",
-    "description": "Orange, no stitching missing\r\n\r\nNot faded\r\n\r\nWilling to negotiate.",
-    "price": 300,
-    "image": "uploads\\image-1713024841450.jpg",
-    "date": "2024-04-13T16:14:01.453Z"
-  }
-]
+[{
+  "username": "alex_boogaard",
+  "category": "Vintage Posters",
+  "area": "Pretoria",
+  "title": "Anakin Skywalker poster",
+  "description": "Behold the conflicted soul of Anakin Skywalker, a poster capturing the essence of a hero's tragic journey. Amidst swirling galaxies, his silhouette emerges, torn between the light and the dark. His gaze, intense and piercing, reflects the tumultuous struggle within. The iconic lightsaber, a symbol of both hope and despair, illuminates the path he must choose. With striking imagery and profound symbolism, this poster encapsulates the timeless tale of destiny and redemption.",
+  "price": 400,
+  "image": "uploads\\image-1713374518875.jpg",
+  "date": "2024-04-17T17:21:58.885Z"
+}]

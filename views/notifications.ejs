@@ -63,7 +63,9 @@
                 <tr>
                     <th>Description</th>
                     <th>Date</th>
-                    <th class="delete-column"></th>
+                    <th class="delete-column"><svg onclick="deleteAllNotification()" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.4 19L5 17.6L10.6 12L5 6.4L6.4 5L12 10.6L17.6 5L19 6.4L13.4 12L19 17.6L17.6 19L12 13.4L6.4 19Z" fill="black"/>
+                    </svg></th>
                 </tr>
             </thead>
             <tbody>
@@ -74,38 +76,39 @@
     <script>
         const id = "<%= user_id %>"; 
 
-async function deleteNotification(id, element) {
-    try {
-        await fetch(`/api/deletenotification?id=${id}`);
-        location.reload();
-    } catch (error) {
-        console.error("Error deleting notification:", error);
-    }
-}
+        async function deleteNotification(id) {
+            await fetch(`/api/deletenotification?id=${id}`);
+            location.reload();
 
-const notTable = document.querySelector("tbody");
-fetch(`/api/notifications?id=${id}`)
-    .then(response => response.json())
-    .then(notifications => {
-        notifications.forEach(not => {
-            let record = document.createElement("tr");
-            record.innerHTML = `
-                <td>${not.description}</td>
-                <td class="date">${not.date}</td>
-                <td>
-                    <svg onclick="deleteNotification('${not._id}', this)" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6.4 19L5 17.6L10.6 12L5 6.4L6.4 5L12 10.6L17.6 5L19 6.4L13.4 12L19 17.6L17.6 19L12 13.4L6.4 19Z" fill="black"/>
-                    </svg>
-                </td>`;
-            notTable.appendChild(record);
-        });
+        }
+        async function deleteAllNotification(element) {
+            await fetch(`/api/deleteallnotification?id=${id}`);
+            location.reload();
+        }
 
-        const dates = document.querySelectorAll(".date");
-        dates.forEach(item => {
-            item.textContent = formatDate(item.textContent);
-        });
-    })
-    .catch(error => console.error("Error fetching notifications:", error));
+        const notTable = document.querySelector("tbody");
+        fetch(`/api/notifications?id=${id}`)
+            .then(response => response.json())
+            .then(notifications => {
+                notifications.forEach(not => {
+                    let record = document.createElement("tr");
+                    record.innerHTML = `
+                        <td>${not.description}</td>
+                        <td class="date">${not.date}</td>
+                        <td>
+                            <svg onclick="deleteNotification('${not._id}')" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.4 19L5 17.6L10.6 12L5 6.4L6.4 5L12 10.6L17.6 5L19 6.4L13.4 12L19 17.6L17.6 19L12 13.4L6.4 19Z" fill="black"/>
+                            </svg>
+                        </td>`;
+                    notTable.appendChild(record);
+                });
+            
+                const dates = document.querySelectorAll(".date");
+                dates.forEach(item => {
+                    item.textContent = formatDate(item.textContent);
+                });
+            })
+            .catch(error => console.error("Error fetching notifications:", error));
 
     </script>
 </body>
