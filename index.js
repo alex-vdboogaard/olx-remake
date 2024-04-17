@@ -24,7 +24,6 @@ const User = require('./models/user');
 const Category = require('./models/category');
 const Listing = require('./models/listing');
 const Notification = require('./models/notification');
-const userContact = require('./models/userContact');
 const Area = require('./models/area');
 const {ExpressError} = require("./public/js/expressError");
 const UserContact = require("./models/userContact");
@@ -117,6 +116,26 @@ function deleteImage(filePath) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //get requests
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//seed data:
+var assert = require('assert')
+
+async function seedData(model, fileName) {
+    const data = JSON.parse(fs.readFileSync(fileName, 'utf8'));
+    await model.insertMany(data);
+}
+
+app.get('/seed-data', catchAsync(async (req, res) => {
+    const seedDataDir = path.join(__dirname, "seedData");
+    await seedData(User, path.join(seedDataDir, "OLX.users.json"));
+    await seedData(Area, path.join(seedDataDir, "OLX.areas.json"));
+    await seedData(Category, path.join(seedDataDir, "OLX.categories.json"));
+    await seedData(Listing, path.join(seedDataDir, "OLX.listings.json"));
+    await seedData(Notification, path.join(seedDataDir, "OLX.notifications.json"));
+    await seedData(UserContact, path.join(seedDataDir, "OLX.usercontacts.json"));
+    req.flash("success", "Data seeded successfully");
+    res.redirect("/login");
+}));
+
 async function getUser(id) {
     const user = await User.findById(id);
     return user;

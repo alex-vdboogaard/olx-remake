@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const mongoose = require('mongoose');
 
 const listingSchema = Joi.object({
   username: Joi.string().required().messages({
@@ -65,8 +66,6 @@ const notificationSchema = Joi.object({
     }),
     role: Joi.string().default('user')
 });
-
-
 
   const categorySchema = Joi.object({
     description: Joi.string().required().messages({
