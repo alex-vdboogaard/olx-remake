@@ -462,7 +462,13 @@ app.post("/user/dashboard/edit-listing", upload.single("image"), validateSchemaM
   catchAsync(async (req, res) => {
     const {id, image} = req.query;
     const { title, username, description, price, category, area } = req.body;
-    const imagePath = req.file ? req.file.path : image;
+
+    let imagePath = req.file ? req.file.path : image; // Use the new file path if uploaded, otherwise use the original image path
+    if (req.file) {
+        // If a new file was uploaded, delete the original image
+        deleteImage(image);
+      }
+
     const listing = Listing.findByIdAndUpdate(id, {
       title: title,
       description: description,
