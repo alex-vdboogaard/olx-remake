@@ -533,6 +533,16 @@ app.post("/admin/create-area", validateSchemaMiddleware('area'), catchAsync(asyn
 app.post("/api/update-account/:_id", validateSchemaMiddleware('user'), catchAsync(async (req, res) => {
     let { username, governmentId, firstName, lastName, cell, password } = req.body;
     let _id = req.params._id;
+    const user = await getUser(_id);
+
+    //user entered a new cellphone number:
+    if (user.cell != cell) {
+        let dupUser = await User.find({cell:cell})
+        if (dupUser) {
+            throw new ExpressError("Cellphone number already exists.")
+        }
+    }
+
     password = await hashPassword(password);
     // const response = await axios.get(`/api/userdetails?id=${username}`);
     // const user = await response.data;
