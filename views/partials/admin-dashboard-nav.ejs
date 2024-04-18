@@ -1,0 +1,46 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/public/css/basics.css">
+<link rel="stylesheet" href="/public/css/dashboard/dashboard-nav.css">
+<link rel="stylesheet" href="/public/css/dashboard/dashboard.css">
+<nav class="side-nav">
+    <a href="/admin/dashboard" class="nav-a top"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13 9V3H21V9H13ZM3 13V3H11V13H3ZM13 21V11H21V21H13ZM3 21V15H11V21H3ZM5 11H9V5H5V11ZM15 19H19V13H15V19ZM15 7H19V5H15V7ZM5 19H9V17H5V19Z" fill="#EDEDED"/>
+        </svg><p class="nav-a-text">Overview</p></a>
+    <a href="/admin/listings" class="nav-a" id="not-count-a"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21.4 14.25L14.25 21.4C14.05 21.6 13.825 21.75 13.575 21.85C13.325 21.95 13.075 22 12.825 22C12.575 22 12.325 21.95 12.075 21.85C11.825 21.75 11.6 21.6 11.4 21.4L2.575 12.575C2.39167 12.3917 2.25 12.1793 2.15 11.938C2.05 11.6967 2 11.4423 2 11.175V4C2 3.45 2.196 2.97933 2.588 2.588C2.98 2.19667 3.45067 2.00067 4 2H11.175C11.4417 2 11.7 2.05433 11.95 2.163C12.2 2.27167 12.4167 2.41733 12.6 2.6L21.4 11.425C21.6 11.625 21.746 11.85 21.838 12.1C21.93 12.35 21.9757 12.6 21.975 12.85C21.9743 13.1 21.9287 13.346 21.838 13.588C21.7473 13.83 21.6013 14.0507 21.4 14.25ZM12.825 20L19.975 12.85L11.15 4H4V11.15L12.825 20ZM6.5 8C6.91667 8 7.271 7.85433 7.563 7.563C7.855 7.27167 8.00067 6.91733 8 6.5C7.99933 6.08267 7.85367 5.72867 7.563 5.438C7.27233 5.14733 6.918 5.00133 6.5 5C6.082 4.99867 5.728 5.14467 5.438 5.438C5.148 5.73133 5.002 6.08533 5 6.5C4.998 6.91467 5.144 7.269 5.438 7.563C5.732 7.857 6.086 8.00267 6.5 8Z" fill="white"/>
+        </svg>        
+        <p class="nav-a-text">Listings</p></a>
+    <a href="/admin/database" class="nav-a"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 17V7C20 4.832 16.337 3 12 3C7.663 3 4 4.832 4 7V17C4 19.168 7.663 21 12 21C16.337 21 20 19.168 20 17ZM12 5C15.691 5 17.931 6.507 18 6.994C17.931 7.493 15.691 9 12 9C8.309 9 6.069 7.493 6 7.006C6.069 6.507 8.309 5 12 5ZM6 9.607C7.479 10.454 9.637 11 12 11C14.363 11 16.521 10.454 18 9.607V11.994C17.931 12.493 15.691 14 12 14C8.309 14 6.069 12.493 6 12V9.607ZM6 17V14.607C7.479 15.454 9.637 16 12 16C14.363 16 16.521 15.454 18 14.607V16.994C17.931 17.493 15.691 19 12 19C8.309 19 6.069 17.493 6 17Z" fill="white"/>
+        </svg><p class="nav-a-text">Database</p></a>
+        
+    <a href="/logout" class="nav-a bottom"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 8V6C15 5.46957 14.7893 4.96086 14.4142 4.58579C14.0391 4.21071 13.5304 4 13 4H6C5.46957 4 4.96086 4.21071 4.58579 4.58579C4.21071 4.96086 4 5.46957 4 6V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20H13C13.5304 20 14.0391 19.7893 14.4142 19.4142C14.7893 19.0391 15 18.5304 15 18V16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M21 12H8M8 12L11 9M8 12L11 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p class="nav-a-text">Log out</p></a>           
+</nav>
+
+<div class="alert-container">
+    <% if (successMessages && successMessages.length > 0) { %>
+        <% successMessages.forEach(function(message) { %>
+            <div class="alert alert-success" role="alert">
+                <span><%= message %></span>
+                <span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
+            </div>
+        <% }); %>
+    <% } %>
+
+    <% if (dangerMessages && dangerMessages.length > 0) { %>
+        <% dangerMessages.forEach(function(message) { %>
+            <div class="alert alert-danger" role="alert">
+                <span><%= message %></span>
+                <span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
+            </div>
+        <% }); %>
+    <% } %>
+</div>
+
+<script src="/public/js/messages.js"></script>

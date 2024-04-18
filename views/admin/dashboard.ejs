@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/public/css/admin/basics.css">
+    <link rel="icon" type="image/png" href="/public/images/favicon.png" sizes="128x128">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- ChartJS library -->
+</head>
+<body>
+    <%- include("../partials/admin-dashboard-nav") %>
+    <main>
+        <%- include("../partials/admin-dashboard-header") %>
+        <h1>OLX overview</h1>
+        <h2>New listings</h2>
+        <canvas id="listings"></canvas>
+        <h2>Contact form</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>First name</th>
+                    <th>Email</th>
+                    <th class="grow">Message</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>12 July 2023</td>
+                    <td>Alex</td>
+                    <td>alex.vandenboogaard@outlook.com</td>
+                    <td>Hi, please message me I need to ask you a bunch of questions regarding my info on this website</td>
+                    <td>delete</td>
+                </tr> 
+                <tr>
+                    <td>12 July 2023</td>
+                    <td>Alex</td>
+                    <td>alex.vandenboogaard@outlook.com</td>
+                    <td>Hi, please message me I need to ask you a bunch of questions regarding my info on this website</td>
+                    <td>delete</td>
+                </tr> 
+                <tr>
+                    <td>12 July 2023</td>
+                    <td>Alex</td>
+                    <td>alex.vandenboogaard@outlook.com</td>
+                    <td>Hi, please message me I need to ask you a bunch of questions regarding my info on this website</td>
+                    <td>delete</td>
+                </tr> 
+            </tbody>
+        </table>
+    </main>
+    <script>
+        // Get the canvas element
+        var ctx = document.getElementById('listings').getContext('2d');
+
+        var data = {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [3, 2, 0, 6, 3, 2, 8],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        };
+
+        // Create the chart
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: data
+        });
+    </script>
+</body>
+</html>

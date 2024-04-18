@@ -1,0 +1,52 @@
+h2 {
+    margin-left: 50px;
+    text-decoration: underline;
+    font-weight: 500;
+    font-size: 30px;
+}
+
+canvas {
+    margin-left: 50px;
+    width: 100%;
+    max-width: 800px;
+    max-height: 400px;
+}
+
+table {
+    width: auto;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    margin-left: 50px;
+    margin-bottom: 200px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    max-width: 200px;
+
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Adjust spacing for the first and last cells */
+td:first-child, th:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+td:last-child, th:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+body {
+    overflow-x: hidden;
+}
