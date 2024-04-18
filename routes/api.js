@@ -154,4 +154,15 @@ router.post("/update-account/:_id", validateSchemaMiddleware('user'), catchAsync
     res.redirect("/user/dashboard/account");
 }));
 
+router.get("/listing-dates", catchAsync(async(req,res) => {
+    const result = await Listing.aggregate([
+        {
+          $group: {
+            _id: { date: '$date' } },
+            count: { $sum: 1 }
+          }
+      ]);
+      res.json(result);
+}))
+
 module.exports = router;
