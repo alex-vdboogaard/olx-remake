@@ -7,23 +7,12 @@ const Listing = require('../models/listing');
 const Notification = require('../models/notification');
 const Area = require('../models/area');
 const catchAsync = require("../public/js/catchAsync");
-const fs = require('fs');
-const bcrypt = require("bcrypt");
 const {validateSchema} = require("../schemas")
-
-
-
+const hashPassword = require("../public/js/hashPassword");
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://127.0.0.1:27017/OLX");
-async function getUser(id) {
-    const user = await User.findById(id);
-    return user;
-};
-const hashPassword = async(userPassword) => {
-    const salt = await bcrypt.genSalt(12); //parameter is "difficulty"
-    const hash = await bcrypt.hash(userPassword, salt);
-    return hash;
-}
+const functions = require("../public/js/commonFunctions");
+
 const validateSchemaMiddleware = (schemaName) => (req, res, next) => {
     const { error } = validateSchema(schemaName, req.body);
     if (error) {
@@ -33,20 +22,7 @@ const validateSchemaMiddleware = (schemaName) => (req, res, next) => {
       next();
     }
   };
-function deleteImage(filePath) {
-    fs.access(filePath, fs.constants.F_OK, (err) => {
-      if (err) {
-        console.error('File does not exist');
-        return;
-      }
-      fs.unlink(filePath, (err) => {
-        if (err) {
-          console.error('Error deleting file:', err);
-          return;
-        }
-      });
-    });
-  }
+
 //api for data
 //get data
 router.get("/all-listings", catchAsync(async(req,res) => {
@@ -125,14 +101,14 @@ const { id } = req.query;
 
 router.get("/deleteallnotification", catchAsync(async(req,res) => {
     const { id } = req.query;
-    const user = await getUser(id);
+    const user = await functions.getUser(id);
     const notification = await Notification.deleteMany({ username: user.username });
     res.redirect("/user/dashboard/notifications");
 }))
 
 router.get("/delete-listing", catchAsync(async (req, res) => {
     const { id } = req.query;
-    const user = await getUser(req.session.user_id);
+    const user = await functions.getUser(req.session.user_id);
     const notification = new Notification({ username: user.username, description: "You deleted a listing, hope you sold it!" });
     await notification.save();
     const listing = await Listing.findById(id);
@@ -144,7 +120,7 @@ router.get("/delete-listing", catchAsync(async (req, res) => {
 
 router.get("/delete-user", catchAsync(async (req, res) => {
     const { id } = req.query;
-    const user = await getUser(id);
+    const user = await functions.getUser(id);
     const listings = await Listing.find({username:user.username});
     listings.forEach(listing => {
        deleteImage(listing.image); 
@@ -160,7 +136,7 @@ router.get("/delete-user", catchAsync(async (req, res) => {
 router.post("/update-account/:_id", validateSchemaMiddleware('user'), catchAsync(async (req, res) => {
     let { username, governmentId, firstName, lastName, cell, password } = req.body;
     let _id = req.params._id;
-    const user = await getUser(_id);
+    const user = await functions.getUser(_id);
 
     //user entered a new cellphone number:
     if (user.cell != cell) {

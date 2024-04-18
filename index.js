@@ -3,13 +3,18 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
-const multer = require('multer');
+const multer = require("multer");
 const mongoose = require("mongoose");
 const session = require("express-session");
-const bcrypt = require("bcrypt");
 const flash = require("connect-flash");
+const fs = require("fs");
+const bcrypt = require("bcrypt")
+
+//require custom js files:
 const catchAsync = require("./public/js/catchAsync");
-const fs = require('fs');
+const hashPassword = require("./public/js/hashPassword");
+const functions = require("./public/js/commonFunctions");
+
 
 //routes folder
 const websiteRoutes = require("./routes/website");
@@ -45,6 +50,7 @@ app.use(session({
     saveUninitialized: false
   }));
 app.use(flash());
+
 const validateSchemaMiddleware = (schemaName) => (req, res, next) => {
     const { error } = validateSchema(schemaName, req.body);
     if (error) {
@@ -73,14 +79,6 @@ app.use("/admin", (req, res, next) => {
     next();
 })
 
-
-//encryption and hash functions
-const hashPassword = async(userPassword) => {
-    const salt = await bcrypt.genSalt(12); //parameter is "difficulty"
-    const hash = await bcrypt.hash(userPassword, salt);
-    return hash;
-}
-
 //image upload via multer
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -94,22 +92,6 @@ const upload = multer({ storage: storage });
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
-
-function deleteImage(filePath) {
-  fs.access(filePath, fs.constants.F_OK, (err) => {
-    if (err) {
-      console.error('File does not exist');
-      return;
-    }
-    fs.unlink(filePath, (err) => {
-      if (err) {
-        console.error('Error deleting file:', err);
-        return;
-      }
-      console.log('File deleted successfully');
-    });
-  });
-}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,12 +123,6 @@ app.get('/seed-data', catchAsync(async (req, res) => {
     req.flash("success", "Data seeded successfully");
     res.redirect("/login");
 }));
-
-//find and return user object based on id of user
-async function getUser(id) {
-    const user = await User.findById(id);
-    return user;
-};
 
 
 app.get("/filter", catchAsync(async (req,res) => {
@@ -309,7 +285,7 @@ app.post("/user/dashboard/edit-listing", upload.single("image"), validateSchemaM
     let imagePath = req.file ? req.file.path : image; // Use the new file path if uploaded, otherwise use the original image path
     if (req.file) {
         // If a new file was uploaded, delete the original image
-        deleteImage(image);
+        functions.deleteImage(image);
       }
 
     const listing = Listing.findByIdAndUpdate(id, {
