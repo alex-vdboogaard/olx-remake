@@ -38,6 +38,10 @@
             <div class="inputDiv mr">
                 <label for="password">Password</label>
                 <input required placeholder="Password" type="password" name="password" id="password">
+                <div style="display: flex; padding-top: 10px;">
+                    <input type="checkbox" id="reveal" onclick="showPassword()">
+                    <label for="reveal" style="margin: 0px; padding: 0px;">Show password</label>
+                </div>
             </div>
             <div class="inputDiv">
                 <label for="firstName">First Name</label>
@@ -63,6 +67,14 @@
     </main>
     <script src="/public/js/listings.js"></script>
     <script>
+        function showPassword() {
+          var passwordField = document.getElementById("password");
+          if (passwordField.type === "password") {
+            passwordField.type = "text";
+          } else {
+            passwordField.type = "password";
+          }
+        }
         var modal = document.getElementById("confirmationModal");
 
         const userid = "<%= user_id %>";
