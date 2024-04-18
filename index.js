@@ -20,6 +20,7 @@ const functions = require("./public/js/commonFunctions");
 const websiteRoutes = require("./routes/website");
 const userRoutes = require("./routes/users");
 const apiRoutes = require("./routes/api");
+const adminRoutes = require("./routes/admin");
 
 //schemas:
 const {validateSchema} = require("./schemas")
@@ -70,14 +71,7 @@ app.use((req, res, next) => {
 app.use("/", websiteRoutes);
 app.use("/user", userRoutes);
 app.use("/api", apiRoutes);
-
-app.use("/admin", (req, res, next) => {
-    if (!req.session.admin_id) {
-        req.flash("danger", "Please login to access your dashboard")
-        return res.redirect("/login");
-    }
-    next();
-})
+app.use("/admin", adminRoutes);
 
 //image upload via multer
 const storage = multer.diskStorage({
