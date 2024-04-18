@@ -322,7 +322,12 @@ app.get("/api/delete-listing", catchAsync(async (req, res) => {
 app.get("/api/delete-user", catchAsync(async (req, res) => {
     const { id } = req.query;
     const user = await getUser(id);
+    const listings = await Listing.find({username:user.username});
+    listings.forEach(listing => {
+       deleteImage(listing.image); 
+    });
     await Listing.deleteMany({username:user.username});
+    await Notification.deleteMany({username: user.username});
     await User.findOneAndDelete({username:user.username});
     req.session.user_id = null;
     req.flash("success", "Account deleted, sad to see you go!");
