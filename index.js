@@ -11,6 +11,11 @@ const flash = require("connect-flash");
 const catchAsync = require("./public/js/catchAsync");
 const fs = require('fs');
 
+//routes folder
+const websiteRoutes = require("./routes/website");
+const userRoutes = require("./routes/users");
+const apiRoutes = require("./routes/api");
+
 //schemas:
 const {validateSchema} = require("./schemas")
 
@@ -40,7 +45,6 @@ app.use(session({
     saveUninitialized: false
   }));
 app.use(flash());
-
 const validateSchemaMiddleware = (schemaName) => (req, res, next) => {
     const { error } = validateSchema(schemaName, req.body);
     if (error) {
@@ -57,14 +61,9 @@ app.use((req, res, next) => {
     res.locals.dangerMessages = req.flash("danger");
     next();
 });
-//authorisation
-app.use("/user", (req, res, next) => {
-    if (!req.session.user_id) {
-        req.flash("danger", "Please login to access your dashboard")
-        return res.redirect("/login");
-    }
-    next();
-})
+app.use("/", websiteRoutes);
+app.use("/user", userRoutes);
+app.use("/api", apiRoutes);
 
 app.use("/admin", (req, res, next) => {
     if (!req.session.admin_id) {
@@ -117,8 +116,6 @@ function deleteImage(filePath) {
 //get requests
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //seed data:
-var assert = require('assert')
-
 async function seedData(model, fileName) {
     const data = JSON.parse(fs.readFileSync(fileName, 'utf8'));
     await model.insertMany(data);
@@ -150,28 +147,8 @@ async function getUser(id) {
     const user = await User.findById(id);
     return user;
 };
-//pages
-//website visitors:
-app.get("/", async (req, res) => {
-    res.render("../public/website/home");
-})
-app.get("/login", async (req, res) => {
-    res.render("login");
-})
-app.get("/logout", (req,res) => {
-    req.session.destroy();
-    res.redirect("/login");
-})
 
-app.get("/contact", async(req,res) => {
-    res.render("../public/website/contact");
-})
-app.get("/create-account", async (req, res) => {
-    res.render("create-account");
-})
-app.get("/listings", async (req, res) => {
-    res.render("../public/website/listings");
-})
+
 app.get("/filter", catchAsync(async (req,res) => {
     const { category, area, price } = req.query;
     const filter = {};
@@ -193,11 +170,6 @@ app.get("/search", catchAsync(async (req, res) => {
 
 }));
 
-
-app.get("/listing", async (req, res) => {
-    res.render("../public/website/listing", {id:req.query.id});
-})
-
 app.post("/contact", validateSchemaMiddleware('userContact'), catchAsync( async(req,res) => {
     const { firstName, message, email } = req.body;
     const userContact = new UserContact({firstName, message, email});
@@ -205,135 +177,6 @@ app.post("/contact", validateSchemaMiddleware('userContact'), catchAsync( async(
     req.flash("success", "Message sent successfully")
     res.redirect("/contact");
 }))
-//only registered users  
-app.get("/user/dashboard", (req,res) => {
-    res.render("dashboard", { user_id: req.session.user_id })
-})
-app.get("/user/dashboard/notifications", (req,res) => {
-    res.render("notifications", { user_id: req.session.user_id })
-})
-app.get("/user/dashboard/account", (req,res) => {
-    res.render("account", { user_id: req.session.user_id })
-})
-
-app.get("/user/dashboard/create-listing", (req, res) => {
-    res.render("newListing", { user_id: req.session.user_id });
-  });
-
-app.get("/user/dashboard/listing", async (req, res) => {
-    res.render("editListing", {user_id: req.session.user_id, listing_id:req.query.id});
-})
-
-//api for data
-//get data
-app.get("/api/all-listings", catchAsync(async(req,res) => {
-        const { id } = req.query;
-        if (id === "all") {
-            // Fetch all listings from the database
-            const listings = await Listing.find();
-            res.json(listings);
-        }
-        else {
-            const user = await User.findById(id);
-            const listings = await Listing.find({ username: user.username });
-            res.json(listings);
-        }
-}))
-
-app.get("/api/areas", catchAsync(async(req,res) => {
-    const areas = await Area.find();
-    res.json(areas);
-}))
-
-app.get("/api/categories", catchAsync(async(req,res) => {
-    const categories = await Category.find();
-    res.json(categories);
-}))
-
-app.get("/api/notifications", catchAsync(async(req,res) => {
-        const { id } = req.query;
-        const user = await User.findById(id);
-        const notifications = await Notification.find({ username: user.username });
-        res.json(notifications);
-
-}))
-
-app.get("/api/listing", catchAsync(async(req,res) => {
-        const { id } = req.query;
-        const listing = await Listing.findById(id);
-        res.json(listing);
-}))
-
-app.get("/api/category-description", catchAsync(async(req,res) => {
-    const description = await Category.findOne({_id: req.params.id}).description;
-    res.json(description);
-}))
-
-app.get("/api/area-description", catchAsync(async (req, res) => {
-        const description = await Area.findOne({ _id: req.query.id }).description;
-        res.json(description);
-}));
-app.get("/api/notificationcount", catchAsync(async(req,res) => {
-        const { id } = req.query;
-        if (id) {
-            const user = await User.findById(id);
-            const notifications = await Notification.find({ username: user.username });
-            res.json(notifications.length);
-        }      
-}))
-app.get("/api/userdetails", catchAsync(async(req,res) => {
-    const {id} = req.query;
-    const user = await User.findOne({username:id});
-    res.json(user);
-}))
-
-app.get("/api/userbyid", catchAsync(async(req,res) => {
-    const {id} = req.query;
-    const user = await User.findById(id);
-    res.json(user);
-}))
-
-//delete data
-app.get("/api/deletenotification", catchAsync(async(req,res) => {
-    const { id } = req.query;
-        const notification = await Notification.findOneAndDelete({ _id: id });
-        res.redirect("/user/dashboard/notifications");
-}))
-
-app.get("/api/deleteallnotification", catchAsync(async(req,res) => {
-    const { id } = req.query;
-    const user = await getUser(id);
-    const notification = await Notification.deleteMany({ username: user.username });
-    res.redirect("/user/dashboard/notifications");
-}))
-
-app.get("/api/delete-listing", catchAsync(async (req, res) => {
-    const { id } = req.query;
-    const user = await getUser(req.session.user_id);
-    const notification = new Notification({ username: user.username, description: "You deleted a listing, hope you sold it!" });
-    await notification.save();
-    const listing = await Listing.findById(id);
-    deleteImage(listing.image);
-    const deletedListing = await Listing.findByIdAndDelete(id);
-    req.flash("success", "Listing deleted");
-    res.render("dashboard", {user_id:req.session.user_id}); 
-}));
-
-app.get("/api/delete-user", catchAsync(async (req, res) => {
-    const { id } = req.query;
-    const user = await getUser(id);
-    const listings = await Listing.find({username:user.username});
-    listings.forEach(listing => {
-       deleteImage(listing.image); 
-    });
-    await Listing.deleteMany({username:user.username});
-    await Notification.deleteMany({username: user.username});
-    await User.findOneAndDelete({username:user.username});
-    req.session.user_id = null;
-    req.flash("success", "Account deleted, sad to see you go!");
-    res.render("login"); 
-}));
-
 
 
 //admin
@@ -526,32 +369,6 @@ app.post("/admin/create-area", validateSchemaMiddleware('area'), catchAsync(asyn
 
 }))
 
-///////////////////////////////////////////////////////////////////////////////////////
-//Update requests
-///////////////////////////////////////////////////////////////////////////////////////
-
-app.post("/api/update-account/:_id", validateSchemaMiddleware('user'), catchAsync(async (req, res) => {
-    let { username, governmentId, firstName, lastName, cell, password } = req.body;
-    let _id = req.params._id;
-    const user = await getUser(_id);
-
-    //user entered a new cellphone number:
-    if (user.cell != cell) {
-        let dupUser = await User.find({cell:cell})
-        if (dupUser) {
-            throw new ExpressError("Cellphone number already exists.")
-        }
-    }
-
-    password = await hashPassword(password);
-    // const response = await axios.get(`/api/userdetails?id=${username}`);
-    // const user = await response.data;
-    await User.findByIdAndUpdate(_id, { username, governmentId, firstName, lastName, cell, password }, { new: true });
-    const notification = new Notification({description:`You changed your account details`, username:username})
-    await notification.save();
-    req.flash("success", "Account updated successfully");
-    res.redirect("/user/dashboard/account");
-}));
 
 
 app.all("*", (req, res, next) => {
