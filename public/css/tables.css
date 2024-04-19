@@ -1,0 +1,41 @@
+table {
+    width: auto;
+    border-collapse: collapse;
+    font-family: Inter;
+    /* margin-left: 50px;
+    margin-bottom: 50px; */
+    text-align: left;
+    margin-top: 10px;
+}
+
+
+th, td {
+    padding: 20px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+    text-align: left;
+    transition: all 0.6s;
+    cursor: default;
+    font-size: 19px;
+    width: 1%;
+}
+
+.delete-column {
+    cursor: pointer;
+    text-align: left;
+}
+
+th {
+    background-color: #333138;
+    color: white;
+    font-weight: 400;
+    padding: 20px;
+}
+
+tr:hover td {
+    border-color: #146414;
+}
+
+tr:nth-child(even) {
+    background-color: #F5F5F5;
+}
