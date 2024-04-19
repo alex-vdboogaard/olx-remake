@@ -81,43 +81,59 @@ router.get("/api/areas", catchAsync(async (req,res) => {
     res.json(areas);
 }));
 
-router.get("/api/usercontacts", catchAsync(async (req,res) => {
+router.get("/api/contacts", catchAsync(async (req,res) => {
     const usercontacts = await UserContact.find();
     res.json(usercontacts);
 }));
 
+//api, count
+router.get("/api/count-area", catchAsync(async (req,res) => {
+    const {description} = req.query;
+    const listings = await Listing.find({area:description});
+    const count = listings.length;
+    res.json(count);
+}));
+
+router.get("/api/count-category", catchAsync(async (req,res) => {
+    const {description} = req.query;
+    const listings = await Listing.find({category:description});
+    const count = listings.length;
+    res.json(count);
+}));
+
+router.get("/api/count-listings", catchAsync(async (req,res) => {
+    const {username} = req.query;
+    const listings = await Listing.find({username:username});
+    const count = listings.length;
+    res.json(count);
+}));
+
 //api, delete
 
-router.post("/api/delete-category", catchAsync(async (req, res) => {
-    const { id } = req.query;
-    const category = await Category.findById(id);
-    await Category.findOneAndDelete({ _id: id });
-    //find listings with that category and set them to Other
-    const listings = await Listing.find({ category: category.description });
-    
+router.delete("/api/delete-category", catchAsync(async (req,res) => {
+    const { description } = req.query;
+    const category = await Category.findOneAndDelete({ description: description });
+    const listings = await Listing.find({ category: description });
     for (const listing of listings) {
         await Listing.findByIdAndUpdate(listing._id, { category: "Other" });
     }
-
     req.flash("success", "Category deleted");
-    res.redirect("/admin/database");
+    res.render("/admin/database");
 }));
 
-router.post("/api/delete-area", catchAsync(async (req,res) => {
-    const {id} = req.query;
-    const area = await area.findById(id);
-    await Area.findOneAndDelete({ _id: id });
-    //find listings with that area and set them to Other
-    const listings = await Listing.find({ area: area.description });
-    
+router.delete("/api/delete-area", catchAsync(async (req,res) => {
+    const { description } = req.query;
+    const area = await Area.findOneAndDelete({ description: description });
+    const listings = await Listing.find({ area: description });
     for (const listing of listings) {
         await Listing.findByIdAndUpdate(listing._id, { area: "Other" });
     }
-    req.flash("success", "Area deleted")
-    res.redirect("/admin/database");
+    req.flash("success", "Area deleted");
+    res.render("/admin/database");
 }));
 
-router.post("/api/delete-listing", catchAsync(async (req,res) => {
+
+router.delete("/api/delete-listing", catchAsync(async (req,res) => {
     const {id} = req.query;
     listing = await Listing.findById(id);
     await Listing.findOneAndDelete({_id:id});
@@ -127,14 +143,14 @@ router.post("/api/delete-listing", catchAsync(async (req,res) => {
     res.redirect("/admin/listings");
 }));
 
-router.post("/api/delete-usercontact", catchAsync(async (req,res) => {
+router.delete("/api/delete-contact", catchAsync(async (req,res) => {
     const {id} = req.query;
     await UserContact.findOneAndDelete({_id:id});
     req.flash("success", "Contact form submission deleted")
     res.redirect("/admin/dashboard");
 }));
 
-router.post("/api/delete-user", catchAsync(async (req, res) => {
+router.delete("/api/delete-user", catchAsync(async (req, res) => {
     const { id } = req.query;
     const user = await User.findById(id);
     await User.findOneAndDelete({ _id: id });
