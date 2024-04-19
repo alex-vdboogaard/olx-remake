@@ -14,6 +14,9 @@ const bcrypt = require("bcrypt")
 const catchAsync = require("./public/js/catchAsync");
 const hashPassword = require("./public/js/hashPassword");
 const functions = require("./public/js/commonFunctions");
+const {validateSchema} = require("./schemas")
+const {ExpressError} = require("./public/js/expressError");
+
 
 
 //routes folder
@@ -21,9 +24,6 @@ const websiteRoutes = require("./routes/website");
 const userRoutes = require("./routes/users");
 const apiRoutes = require("./routes/api");
 const adminRoutes = require("./routes/admin");
-
-//schemas:
-const {validateSchema} = require("./schemas")
 
 //database set up
 mongoose.connect("mongodb://127.0.0.1:27017/OLX")
@@ -36,7 +36,6 @@ const Category = require('./models/category');
 const Listing = require('./models/listing');
 const Notification = require('./models/notification');
 const Area = require('./models/area');
-const {ExpressError} = require("./public/js/expressError");
 const UserContact = require("./models/userContact");
 
 //middleware
@@ -148,35 +147,6 @@ app.post("/contact", validateSchemaMiddleware('userContact'), catchAsync( async(
     res.redirect("/contact");
 }))
 
-
-//admin
-app.get('/admin/create-category', (req, res) => {
-    res.send(`
-        <form action="/create-category" method="POST">
-            <input required type="text" name="description" placeholder="description">
-            <button type="submit">Create Category</button>
-        </form>
-    `);
-});
-
-app.get('/admin/create-area', (req, res) => {
-    res.send(`
-        <form action="/create-area" method="POST">
-            <input required type="text" name="description" placeholder="description">
-            <button type="submit">Create Area</button>
-        </form>
-    `);
-});
-
-app.get('/admin/create-notification', (req, res) => {
-    res.send(`
-        <form action="/create-notification" method="POST">
-            <input required type="text" name="description" placeholder="Description">
-            <input required type="text" name="username" placeholder="Username">
-            <button type="submit">Create Notification</button>
-        </form>
-    `);
-});
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //post requests

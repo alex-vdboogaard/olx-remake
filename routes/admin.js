@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const User = require('./models/user');
-const Category = require('./models/category');
-const Listing = require('./models/listing');
-const Notification = require('./models/notification');
-const Area = require('./models/area');
-const UserContact = require("./models/userContact");
-const catchAsync = require("./public/js/catchAsync");
+const User = require('../models/user');
+const Category = require('../models/category');
+const Listing = require('../models/listing');
+const Notification = require('../models/notification');
+const Area = require('../models/area');
+const UserContact = require("../models/userContact");
+const catchAsync = require("../public/js/catchAsync");
+const {ExpressError} = require("../public/js/expressError");
 
 router.use((req, res, next) => {
     if (!req.session.admin_id) {
@@ -24,58 +25,70 @@ router.get("/listings", (req,res) => {
     res.render("admin/listings")
 })
 
+router.get("/create-category", (req,res) => {
+    res.render("admin/create-category")
+})
+
+router.get("/create-area", (req,res) => {
+    res.render("admin/create-area")
+})
+
+router.get("/send-notification", (req,res) => {
+    res.render("admin/send-notification")
+})
+
 router.get("/database", (req,res) => {
     res.render("admin/database")
 })
 
 router.get("/edit-listing", (req,res) => {
     const {id} = req.query;
-    res.render("admin/database", {listing_id:id});
+    res.render("admin/edit-listing", {listing_id:id});
 })
 
 router.get("/send-notification", catchAsync(async(req,res) => {
     const {id} = req.query;
     const user = await User.findById(id);
-    res.render("admin/database", {username:user.username});
+    res.render("admin/send-notification", {username:user.username});
 }));
 
 
 
 //api, get
-router.get("api/listing", catchAsync(async (req,res) => {
+router.get("/api/listing", catchAsync(async (req,res) => {
     const {id} = req.query;
     const listing = await Listing.findById(id);
     res.json(listings);
 }));
 
-router.get("api/listings", catchAsync(async (req,res) => {
+router.get("/api/listings", catchAsync(async (req,res) => {
     const listings = await Listing.find();
     res.json(listings);
 }));
 
-router.get("api/users", catchAsync(async (req,res) => {
+router.get("/api/users", catchAsync(async (req,res) => {
     const users = await User.find();
     res.json(users);
 }));
 
-router.get("api/categories", catchAsync(async (req,res) => {
+router.get("/api/categories", catchAsync(async (req,res) => {
     const categories = await Category.find();
     res.json(categories);
 }));
 
-router.get("api/areas", catchAsync(async (req,res) => {
+router.get("/api/areas", catchAsync(async (req,res) => {
     const areas = await Area.find();
     res.json(areas);
 }));
 
-router.get("api/usercontacts", catchAsync(async (req,res) => {
+router.get("/api/usercontacts", catchAsync(async (req,res) => {
     const usercontacts = await UserContact.find();
     res.json(usercontacts);
 }));
 
 //api, delete
 
-router.post("api/delete-category", catchAsync(async (req, res) => {
+router.post("/api/delete-category", catchAsync(async (req, res) => {
     const { id } = req.query;
     const category = await Category.findById(id);
     await Category.findOneAndDelete({ _id: id });
@@ -90,7 +103,7 @@ router.post("api/delete-category", catchAsync(async (req, res) => {
     res.redirect("/admin/database");
 }));
 
-router.post("api/delete-area", catchAsync(async (req,res) => {
+router.post("/api/delete-area", catchAsync(async (req,res) => {
     const {id} = req.query;
     const area = await area.findById(id);
     await Area.findOneAndDelete({ _id: id });
@@ -104,7 +117,7 @@ router.post("api/delete-area", catchAsync(async (req,res) => {
     res.redirect("/admin/database");
 }));
 
-router.post("api/delete-listing", catchAsync(async (req,res) => {
+router.post("/api/delete-listing", catchAsync(async (req,res) => {
     const {id} = req.query;
     listing = await Listing.findById(id);
     await Listing.findOneAndDelete({_id:id});
@@ -114,14 +127,14 @@ router.post("api/delete-listing", catchAsync(async (req,res) => {
     res.redirect("/admin/listings");
 }));
 
-router.post("api/delete-usercontact", catchAsync(async (req,res) => {
+router.post("/api/delete-usercontact", catchAsync(async (req,res) => {
     const {id} = req.query;
     await UserContact.findOneAndDelete({_id:id});
     req.flash("success", "Contact form submission deleted")
     res.redirect("/admin/dashboard");
 }));
 
-router.post("api/delete-user", catchAsync(async (req, res) => {
+router.post("/api/delete-user", catchAsync(async (req, res) => {
     const { id } = req.query;
     const user = await User.findById(id);
     await User.findOneAndDelete({ _id: id });
@@ -136,7 +149,7 @@ router.post("api/delete-user", catchAsync(async (req, res) => {
     res.redirect("/admin/dashboard");
 }));
 //api, create
-router.post("api/send-notification", catchAsync(async (req,res) => {
+router.post("/api/send-notification", catchAsync(async (req,res) => {
     const {username, message} = req.body;
     const notification = new Notification({username:username, description:message})
     await Notification.save()
@@ -144,16 +157,26 @@ router.post("api/send-notification", catchAsync(async (req,res) => {
     res.redirect("/admin/dashboard");
 }));
 
-router.post("api/create-category", catchAsync(async (req,res) => {
+router.post("/api/create-category", catchAsync(async (req,res) => {
     const {description} = req.body;
+    //find duplicate
+    const dupCategory = await Category.findOne({description:description});
+    if (dupCategory) {
+        throw new ExpressError("Category already exists")
+    };
     const category = new Category({description:description})
     await category.save()
     req.flash("success", "New category created")
     res.redirect("/admin/database");
 }));
 
-router.post("api/create-area", catchAsync(async (req,res) => {
+router.post("/api/create-area", catchAsync(async (req,res) => {
     const {description} = req.body;
+    //find duplicate
+    const dupArea = await Area.findOne({description:description});
+    if (dupArea) {
+        throw new ExpressError("Area already exists")
+    };
     const area = new Area({description:description})
     await area.save()
     req.flash("success", "New area created")
@@ -161,7 +184,7 @@ router.post("api/create-area", catchAsync(async (req,res) => {
 }));
 
 //api, edit
-router.put("api/edit-listing", catchAsync(async (req,res) => {
+router.put("/api/edit-listing", catchAsync(async (req,res) => {
     const {id, title, description} = req.body;
     const listing = await Listing.findById(id);
     await Listing.findByIdAndUpdate(id, {title:title, description:description, image:image}).exec();
