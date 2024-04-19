@@ -41,10 +41,10 @@ router.get("/database", (req,res) => {
     res.render("admin/database")
 })
 
-router.get("/edit-listing", (req,res) => {
+router.get("/edit-listing", catchAsync(async(req,res) => {
     const {id} = req.query;
-    res.render("admin/edit-listing", {listing_id:id});
-})
+    res.render("admin/edit-listing");
+}));
 
 router.get("/send-notification", catchAsync(async(req,res) => {
     const {id} = req.query;

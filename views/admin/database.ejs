@@ -14,8 +14,14 @@
     <main>
         <%- include("../partials/admin-dashboard-header") %>
         <h1>Database</h1>
-        <h2>Areas</h2>
-        <table style="margin-left: 40px;">
+        <div style="display: flex; align-items: center;">
+            <h2>Areas</h2>
+            <a href="/admin/create-area" style="margin-left: 20px;"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="18" cy="18" r="18" fill="#188C3E"/>
+                <path d="M24.0755 19.5352H18.638V24.9727C18.638 25.2611 18.5234 25.5377 18.3195 25.7417C18.1155 25.9456 17.8389 26.0602 17.5505 26.0602C17.2621 26.0602 16.9855 25.9456 16.7815 25.7417C16.5776 25.5377 16.463 25.2611 16.463 24.9727V19.5352H11.0255C10.7371 19.5352 10.4605 19.4206 10.2565 19.2167C10.0526 19.0127 9.93799 18.7361 9.93799 18.4477C9.93799 18.1593 10.0526 17.8827 10.2565 17.6787C10.4605 17.4748 10.7371 17.3602 11.0255 17.3602H16.463V11.9227C16.463 11.6343 16.5776 11.3577 16.7815 11.1537C16.9855 10.9498 17.2621 10.8352 17.5505 10.8352C17.8389 10.8352 18.1155 10.9498 18.3195 11.1537C18.5234 11.3577 18.638 11.6343 18.638 11.9227V17.3602H24.0755C24.3639 17.3602 24.6405 17.4748 24.8445 17.6787C25.0484 17.8827 25.163 18.1593 25.163 18.4477C25.163 18.7361 25.0484 19.0127 24.8445 19.2167C24.6405 19.4206 24.3639 19.5352 24.0755 19.5352Z" fill="white"/>
+                </svg></a>
+          </div>
+        <table style="margin-left: 40px; margin-bottom: 30px;">
             <thead>
                 <tr>
                     <th>Description</th>
@@ -26,7 +32,13 @@
             <tbody id="areas-table">
             </tbody>
         </table>
-        <h2>Categories</h2>
+        <div style="display: flex; align-items: center;">
+            <h2>Categories</h2>
+            <a href="/admin/create-category" style="margin-left: 20px;"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="18" cy="18" r="18" fill="#188C3E"/>
+                <path d="M24.0755 19.5352H18.638V24.9727C18.638 25.2611 18.5234 25.5377 18.3195 25.7417C18.1155 25.9456 17.8389 26.0602 17.5505 26.0602C17.2621 26.0602 16.9855 25.9456 16.7815 25.7417C16.5776 25.5377 16.463 25.2611 16.463 24.9727V19.5352H11.0255C10.7371 19.5352 10.4605 19.4206 10.2565 19.2167C10.0526 19.0127 9.93799 18.7361 9.93799 18.4477C9.93799 18.1593 10.0526 17.8827 10.2565 17.6787C10.4605 17.4748 10.7371 17.3602 11.0255 17.3602H16.463V11.9227C16.463 11.6343 16.5776 11.3577 16.7815 11.1537C16.9855 10.9498 17.2621 10.8352 17.5505 10.8352C17.8389 10.8352 18.1155 10.9498 18.3195 11.1537C18.5234 11.3577 18.638 11.6343 18.638 11.9227V17.3602H24.0755C24.3639 17.3602 24.6405 17.4748 24.8445 17.6787C25.0484 17.8827 25.163 18.1593 25.163 18.4477C25.163 18.7361 25.0484 19.0127 24.8445 19.2167C24.6405 19.4206 24.3639 19.5352 24.0755 19.5352Z" fill="white"/>
+                </svg></a>
+          </div>
         <table style="margin-left: 40px; margin-bottom: 100px;">
             <thead>
                 <tr>
@@ -106,7 +118,9 @@
                 areaRow.innerHTML = `
                     <td>${area.description}</td>
                     <td>${countData}</td>
-                    <td class="delete-column"><button onclick="deleteArea('${area.description}')">delete</button></td>`;
+                    <td class="delete-column"><svg onclick="deleteArea('${area.description}')" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.4 19L5 17.6L10.6 12L5 6.4L6.4 5L12 10.6L17.6 5L19 6.4L13.4 12L19 17.6L17.6 19L12 13.4L6.4 19Z" fill="black"/>
+                            </svg></td>`;
 
                 document.getElementById("areas-table").appendChild(areaRow);
             }
@@ -122,7 +136,9 @@
                 catRow.innerHTML = `
                     <td>${category.description}</td>
                     <td>${countData}</td>
-                    <td class="delete-column"><button onclick="deleteCategory('${category.description}')">delete</button></td>`;
+                    <td class="delete-column"><svg onclick="deleteCategory('${category.description}')" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.4 19L5 17.6L10.6 12L5 6.4L6.4 5L12 10.6L17.6 5L19 6.4L13.4 12L19 17.6L17.6 19L12 13.4L6.4 19Z" fill="black"/>
+                            </svg></td>`;
 
                 document.getElementById("categories-table").appendChild(catRow);
             }

@@ -130,13 +130,12 @@ app.get("/filter", catchAsync(async (req,res) => {
 }))
 
 app.get("/search", catchAsync(async (req, res) => {
-    const { q } = req.query;
-    const listings = await Listing.find({$or: [{title: {$regex: new RegExp(q, "i")}},
-    {area: {$regex: new RegExp(q, "i")}},
-    {category: {$regex: new RegExp(q, "i")}}
-]});
+        const { q } = req.query;
+        const listings = await Listing.find({$or: [{title: {$regex: new RegExp(q, "i")}},
+        {area: {$regex: new RegExp(q, "i")}},
+        {category: {$regex: new RegExp(q, "i")}}
+    ]});
     res.json(listings);
-
 }));
 
 app.post("/contact", validateSchemaMiddleware('userContact'), catchAsync( async(req,res) => {
