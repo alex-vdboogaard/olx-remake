@@ -68,7 +68,7 @@ router.get("/api/listings", catchAsync(async (req,res) => {
 }));
 
 router.get("/api/users", catchAsync(async (req,res) => {
-    const users = await User.find();
+    const users = await User.find({role:"user"});
     res.json(users);
 }));
 
@@ -157,13 +157,12 @@ router.delete("/api/delete-user", catchAsync(async (req, res) => {
     await User.findOneAndDelete({ _id: id });
     //find listings with that username and delete them
     const listings = await Listing.find({ username: user.username });
-    
     for (const listing of listings) {
         await Listing.findByIdAndDelete(listing._id);
     }
 
     req.flash("success", "User and corresponding listings deleted");
-    res.redirect("/admin/dashboard");
+    res.redirect("/admin/database");
 }));
 //api, create
 router.post("/api/send-notification", catchAsync(async (req,res) => {

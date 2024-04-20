@@ -50,6 +50,18 @@
             <tbody id="categories-table">
             </tbody>
         </table>
+        <h2>Users</h2>
+        <table style="margin-left: 40px; margin-bottom: 100px;">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Total listings</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="users-table">
+            </tbody>
+        </table>
     </main>
     <script>
         //define delete area and category functions with a common confirmation modal
@@ -108,6 +120,18 @@
             });
         }
 
+        async function deleteUser(id) {
+        showConfirmationModal("Are you sure you want to delete this user? It will delete all its listings.")
+        .then(async confirmed => {
+            if (confirmed) {
+                const response = await fetch(`/admin/api/delete-user?id=${id}`, {
+                    method: 'DELETE'
+                });
+                window.location.reload();
+            }
+            });
+        }
+
         fetch("/admin/api/areas")
         .then(response => response.json()) 
         .then(async areas => {
@@ -141,6 +165,24 @@
                             </svg></td>`;
 
                 document.getElementById("categories-table").appendChild(catRow);
+            }
+        });
+
+        fetch("/admin/api/users")
+        .then(response => response.json()) 
+        .then(async users => {
+            for (const user of users) {
+                const countResponse = await fetch(`/admin/api/count-listings?username=${user.username}`);
+                const countData = await countResponse.json();
+                let userRow = document.createElement("tr");
+                userRow.innerHTML = `
+                    <td>${user.username}</td>
+                    <td>${countData}</td>
+                    <td class="delete-column"><svg onclick="deleteUser('${user._id}')" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.4 19L5 17.6L10.6 12L5 6.4L6.4 5L12 10.6L17.6 5L19 6.4L13.4 12L19 17.6L17.6 19L12 13.4L6.4 19Z" fill="black"/>
+                            </svg></td>`;
+
+                document.getElementById("users-table").appendChild(userRow);
             }
         });
     </script>
