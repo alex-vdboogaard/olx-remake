@@ -8,6 +8,20 @@ const Area = require('../models/area');
 const UserContact = require("../models/userContact");
 const catchAsync = require("../public/js/catchAsync");
 const {ExpressError} = require("../public/js/expressError");
+const {validateSchemaMiddleware} = require("../public/js/validateSchemaMiddleware");
+const functions = require("../public/js/commonFunctions");
+const multer = require("multer");
+
+//image upload via multer
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)) // Generate unique filename
+    }
+  });
+const upload = multer({ storage: storage });
 
 router.use((req, res, next) => {
     if (!req.session.admin_id) {
@@ -200,14 +214,30 @@ router.post("/api/create-area", catchAsync(async (req,res) => {
 }));
 
 //api, edit
-router.put("/api/edit-listing", catchAsync(async (req,res) => {
-    const {id, title, description} = req.body;
-    const listing = await Listing.findById(id);
-    await Listing.findByIdAndUpdate(id, {title:title, description:description, image:image}).exec();
-    const notification = new Notification({username:listing.username, description:`Your listing, ${listing.title}, was edited by the admin`})
-    await Notification.save()
-    req.flash("success", "New category created")
-    res.redirect("/admin/database");
+router.post("/api/edit-listing", upload.single("image"), validateSchemaMiddleware('listing'),
+  catchAsync(async (req, res) => {
+    const {id, image} = req.query;
+    const { title, username, description, price, category, area } = req.body;
+
+    let imagePath = req.file ? req.file.path : image; // Use the new file path if uploaded, otherwise use the original image path
+    if (req.file) {
+        // If a new file was uploaded, delete the original image
+        functions.deleteImage(image);
+      }
+
+    const listing = Listing.findByIdAndUpdate(id, {
+      title: title,
+      description: description,
+      price: price,
+      category: category,
+      area: area,
+      image: imagePath,
+      username:username
+    }).exec();
+    const notification = new Notification({username:username, description:`Your listing, ${listing.title}, was edited by the admin`})
+    await notification.save()
+    req.flash("success", "Listing updated")
+    res.redirect("/admin/listings");
 }));
 
 

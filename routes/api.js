@@ -112,7 +112,7 @@ router.get("/delete-listing", catchAsync(async (req, res) => {
     const notification = new Notification({ username: user.username, description: "You deleted a listing, hope you sold it!" });
     await notification.save();
     const listing = await Listing.findById(id);
-    deleteImage(listing.image);
+    functions.deleteImage(listing.image);
     const deletedListing = await Listing.findByIdAndDelete(id);
     req.flash("success", "Listing deleted");
     res.render("dashboard", {user_id:req.session.user_id}); 

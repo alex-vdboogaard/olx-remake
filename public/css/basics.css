@@ -44,8 +44,8 @@ h1 {
 .row {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    justify-content: start;
+    align-items: start;
 }
 
 .inputDiv {

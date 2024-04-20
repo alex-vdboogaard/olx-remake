@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/singleListing.css">
     <link rel="icon" type="image/png" href="/public/images/favicon.png" sizes="128x128">
     <title>OLX - listing</title>
+    <link rel="stylesheet" href="/public/css/singleListing.css">
     <style>
         p {
             margin: 0px;
@@ -29,7 +29,7 @@
         const div = document.createElement("div");
         div.className = "top-info";
         div.innerHTML = `
-            <img id="listing-image" src="${listing.image}" alt="${listing.title}">
+            <img class="listing-image-big" src="${listing.image}" alt="${listing.title}">
             <div class="listing-div">
                 <h1 class="h1">${listing.title}</h1>
                 <p>${listing.category}</p>
