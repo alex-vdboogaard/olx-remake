@@ -1,5 +1,6 @@
 async function openListing(id) {
   await fetch(`/admin/edit-listing`);
+  window.location.href = `/admin/edit-listing?id=${id}`;
 };
 
 async function getListings(userid) {
