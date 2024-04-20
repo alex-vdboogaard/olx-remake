@@ -6,13 +6,118 @@
     <title>Edit listing</title>
     <link rel="stylesheet" href="/public/css/admin/basics.css">
     <link rel="icon" type="image/png" href="/public/images/favicon.png" sizes="128x128">
+    <style>
+        #image {
+            max-width: 400px;
+            height: auto;
+            max-height: none;
+            margin-left: 50px;
+        }
+    </style>
 </head>
 <body>
     <%- include("../partials/admin-dashboard-nav") %>
     <main>
         <%- include("../partials/admin-dashboard-header") %>
         <h1>Edit listing</h1>
-        <p><%= listing %></p>
+        <img id="image" src="" alt="">
+        <form class="left-form" action="/user/dashboard/edit-listing" method="POST" enctype="multipart/form-data">
+          <input required type="hidden" name="username" id="username" value="boo">
+          <div class="inputGroup row">
+            <div class="inputDiv mr">
+                <label for="title">Listing Title:</label>
+                <input required type="text" name="title" id="title" placeholder="Listing Title">
+              </div>
+              <div class="inputDiv">
+                <label for="description">Description:</label>
+                <textarea required type="text" name="description" id="description" placeholder="Description"></textarea>
+              </div>    
+          </div>
+          <div class="inputGroup row">
+            <div class="inputDiv mr">
+              <label for="categoryFilter">Category:</label>
+              <select name="category" class="styled-select" aria-label="Category" id="categoryFilter">
+                <option value="">Category</option>
+              </select>
+            </div>
+            <div class="inputDiv">
+              <label for="areaFilter">Area:</label>
+              <select name="area" class="styled-select" aria-label="Location" id="areaFilter">
+                <option value="">Area</option>
+              </select>
+            </div>
+        </div>
+        <div class="inputGroup row">
+            <div class="inputDiv mr">
+              <label for="price">Price (R):</label>
+              <input required type="number" min="0" name="price" id="price" placeholder="Price">
+            </div>
+            <div class="inputDiv">
+                <label for="image">Listing image</label>
+                <input style="margin: 0px;" type="file" name="image" id="image" accept=".jpg, .jpeg, .png">
+            </div>
+        </div>
+        <div class="button-group">
+            <button id="deleteButton" type="button" class="btn-red">Delete</button>
+            <button class="submit-button btn-green" type="submit">Save changes</button>
+        </div>
+          </form>
+        </div>  
     </main>
+
+    <script src="/public/js/listings.js"></script>
+    <script>    
+        document.addEventListener("DOMContentLoaded", async function() {
+            
+            // Fetch listing details and poulate the page
+            const listingId = "<%=listing._id%>";
+            const listingUsername = "<%=listing.username%>";
+            const listingTitle = "<%=listing.title%>";
+            const listingDescription = "<%=listing.description%>";
+            const listingCategory = "<%=listing.category%>";
+            const listingArea = "<%=listing.area%>";
+            const listingPrice = "<%=listing.price%>";
+            const listingImage = "<%=listing.image%>";
+            let image = "/" + listingImage;
+            // let image = listingImage.replace(/\\/, "a");
+            // image = "/" + image;
+            document.querySelector("#price").value = listingPrice;
+            document.querySelector("#title").value = listingTitle;
+            document.querySelector("#description").value = listingDescription;
+            document.querySelector("img").src = image;
+            document.querySelector("img").alt = listingTitle;
+            document.querySelector("#username").value = listingUsername;
+            document.querySelector("form").action = `/admin/api/edit-listing?id=${listingId}&image=${listingImage}`;
+
+            const response = await populateFilters(); // Add categories and areas from the database
+            const category = document.getElementById('categoryFilter');
+            const area = document.getElementById('areaFilter');
+
+
+            const areas = response.areas;
+            areas.forEach(areaObj => {
+              let option = document.createElement("option");
+              if (areaObj.description === listingArea) {
+                option.selected = true;
+              }
+              option.value = areaObj.description;
+              option.textContent = areaObj.description;
+              area.appendChild(option);
+            });
+            const categories = response.categories;
+            categories.forEach(categoryObj => {
+              let option = document.createElement("option");
+              if (categoryObj.description === listingCategory) {
+                option.selected = true;
+              }
+              option.value = categoryObj.description;
+              option.textContent = categoryObj.description;
+              category.appendChild(option);
+            });
+        });
+    </script>
+
 </body>
 </html>
+
+    

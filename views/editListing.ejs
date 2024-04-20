@@ -80,14 +80,14 @@
         var modal = document.getElementById("confirmationModal");
     
         document.addEventListener("DOMContentLoaded", async function() {
-            const user_id = "<%= user_id %>"; 
-            const listing_id = "<%= listing_id %>";
+            const user_id = "<%=user_id%>"; 
+            const listing_id = "<%=listing_id%>";
             const modal = document.getElementById("confirmationModal");
             const deleteButton = document.getElementById("deleteButton");
             
             // Fetch listing details and populate the page
             const listing = await getListing(listing_id);
-            let image = listing.image.replace(/\\/g, '/');
+            let image = listing.image.replace('\\', '/');
             image = "/" + image;
             document.querySelector("#price").value = listing.price;
             document.querySelector("#title").value = listing.title;
@@ -132,7 +132,7 @@
     
         async function confirmDelete() {
             closeModal();
-            const listing_id = "<%= listing_id %>";
+            const listing_id = "<%=listing_id%>";
             await deleteListing(listing_id);
             window.location.href = "/user/dashboard";
         }

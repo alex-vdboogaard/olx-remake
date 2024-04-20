@@ -14,8 +14,8 @@ const bcrypt = require("bcrypt")
 const catchAsync = require("./public/js/catchAsync");
 const hashPassword = require("./public/js/hashPassword");
 const functions = require("./public/js/commonFunctions");
-const {validateSchema} = require("./schemas")
 const {ExpressError} = require("./public/js/expressError");
+const {validateSchemaMiddleware} = require("./public/js/validateSchemaMiddleware");
 
 
 
@@ -50,16 +50,6 @@ app.use(session({
     saveUninitialized: false
   }));
 app.use(flash());
-
-const validateSchemaMiddleware = (schemaName) => (req, res, next) => {
-    const { error } = validateSchema(schemaName, req.body);
-    if (error) {
-      const msg = error.details.map(el => el.message).join(",");
-      next(new ExpressError(msg, 400));
-    } else {
-      next();
-    }
-  };
 
 //middleware for messages
 app.use((req, res, next) => {
