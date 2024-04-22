@@ -16,3 +16,10 @@ A remake of the popular platform, OLX, which was discontinued by its owner compa
 - Type ``` Admin1234!! ``` as the password
 - Click log in
 
+## Tech stack
+### Front end
+- HTML,CSS, JavaScript
+### Back end
+- Next.js
+- Express
+- MongoDB
