@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send notification</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="/public/css/admin/basics.css">
     <link rel="icon" type="image/png" href="/public/images/favicon.png" sizes="128x128">
 </head>
@@ -11,7 +11,18 @@
     <%- include("../partials/admin-dashboard-nav") %>
     <main>
         <%- include("../partials/admin-dashboard-header") %>
-        <h1>Send notification</h1>
+        <h1>Send notification to user</h1>
+        <form class="left-form" action="/admin/api/send-notification" method="POST">
+            <div class="inputDiv">
+                <label for="description">Description</label>
+                <input type="text" name="description" id="description" placeholder="Please create a listing soon" required>
+            </div>
+            <div class="inputDiv">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" placeholder="alex_boogaard" required>
+            </div>
+            <button type="submit" class="btn btn-green" style="margin-top: 0px; width: 100%;">Send notification</button>
+        </form>
     </main>
 </body>
 </html>

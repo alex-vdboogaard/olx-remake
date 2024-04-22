@@ -179,12 +179,13 @@ router.delete("/api/delete-user", catchAsync(async (req, res) => {
     res.redirect("/admin/database");
 }));
 //api, create
-router.post("/api/send-notification", catchAsync(async (req,res) => {
-    const {username, message} = req.body;
-    const notification = new Notification({username:username, description:message})
-    await Notification.save()
+router.post("/api/send-notification", validateSchemaMiddleware("notification"), catchAsync(async (req,res) => {
+    let {username, description} = req.body;
+    description = "You have a message from the admin: " + description;
+    const notification = new Notification({username:username, description:description})
+    await notification.save()
     req.flash("success", "Notification sent")
-    res.redirect("/admin/dashboard");
+    res.redirect("/admin/send-notification");
 }));
 
 router.post("/api/create-category", catchAsync(async (req,res) => {
