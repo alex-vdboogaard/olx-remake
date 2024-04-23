@@ -56,34 +56,39 @@
             }
         });
         const today = Date.now();
+        const todayFormatted = formatDate(today);
         const filters = [];
         const labels = [];
         labels.push("Today");
-        filters.push(today);
-        for (let i = 1; i <= 7; i++) {
-            const prevDate = today-i*(24 * 60 * 60 * 1000);
-            labels.unshift(formatDate(prevDate));
+        filters.push(todayFormatted);
+        for (let i = 1; i <= 6; i++) {
+            let prevDate = formatDate(today - i * (24 * 60 * 60 * 1000));
+            labels.unshift(prevDate);
             filters.unshift(prevDate);
         }
-        //graph
-        var ctx = document.getElementById('listings').getContext('2d');
 
-        var data = {
-            labels: labels,
-            datasets: [{
-                label: 'New listings per day',
-                data: [1,2,3,4,5,6,7,8],
-                fill: false,
-                borderColor: 'rgb(24, 140, 62)',
-                tension: 0.1
-            }]
-        };
+        const filtersJSON = JSON.stringify(filters);
+        fetch(`/admin/api/getdates?dates=${encodeURIComponent(filtersJSON)}`)
+            .then(response => response.json())
+            .then(dateData => {
+                var ctx = document.getElementById('listings').getContext('2d');
+                var data = {
+                    labels: labels,
+                    datasets: [{
+                        label: 'New listings per day',
+                        data: dateData,
+                        fill: false,
+                        borderColor: 'rgb(24, 140, 62)',
+                        tension: 0.1
+                    }]
+                };
+                // Create the chart
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: data
+                });
+            });
 
-        // Create the chart
-        var myChart = new Chart(ctx, {
-            type: 'line',
-            data: data
-        });
     </script>
 </body>
 </html>
