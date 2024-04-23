@@ -1,6 +1,7 @@
 # OLX remake
 A remake of the popular platform, OLX, which was discontinued by its owner company, Naspers. 
-
+## Demo
+https://github.com/alex-vdboogaard/olx-remake/assets/51801994/605dab17-f5d3-447b-b91e-9b4242937eb1
 ## How to seed data:
 - First run ``` npm i ```, and make sure you have [MongoDB](https://www.mongodb.com/docs/core/administration/install-community/) installed on your machine.
 - Run ``` nodemon index.js ```
