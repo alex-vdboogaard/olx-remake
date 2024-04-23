@@ -11,6 +11,7 @@ const {ExpressError} = require("../public/js/expressError");
 const {validateSchemaMiddleware} = require("../public/js/validateSchemaMiddleware");
 const functions = require("../public/js/commonFunctions");
 const multer = require("multer");
+const {formatDate} = require("../public/js/transformDate");
 
 //image upload via multer
 const storage = multer.diskStorage({
@@ -100,6 +101,29 @@ router.get("/api/contacts", catchAsync(async (req,res) => {
     const usercontacts = await UserContact.find();
     res.json(usercontacts);
 }));
+
+router.get("/api/getdates", catchAsync(async (req, res) => {
+    const { dates } = req.query;
+    const parsedDates = JSON.parse(dates);
+    const listings = await Listing.find();
+    const dateCountMap = {};
+
+    parsedDates.forEach(date => {
+        dateCountMap[date] = 0;
+    });
+
+    listings.forEach(listing => {
+        const listingDate = formatDate(listing.date);
+        if (dateCountMap.hasOwnProperty(listingDate)) {
+            dateCountMap[listingDate]++;
+        }
+    });
+
+    const data = parsedDates.map(date => dateCountMap[date]);
+
+    res.json(data);
+}));
+
 
 //api, count
 router.get("/api/count-area", catchAsync(async (req,res) => {
